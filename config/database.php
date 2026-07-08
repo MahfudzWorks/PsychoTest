@@ -1,12 +1,12 @@
 <?php
 
-$conn = mysqli_connect(
-  "localhost",
-  "root",
-  "",
-  "psychotest"
-);
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db   = "psychotest";
+
+$conn = mysqli_connect($host, $user, $pass, $db);
 
 if (!$conn) {
-  die("Database gagal terhubung");
+  die("Koneksi gagal");
 }

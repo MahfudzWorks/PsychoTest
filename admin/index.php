@@ -1,5 +1,14 @@
 <?php
 include '../config/session.php';
+
+if ($_SESSION['role'] != "admin") {
+
+  header("Location: ../auth/login.php");
+
+  exit;
+}
+
+include '../config/session.php';
 include '../includes/header.php';
 
 // nanti ambil dari session login admin

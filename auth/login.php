@@ -1,86 +1,59 @@
-<?php include '../includes/header.php'; ?>
-<?php include '../includes/navbar.php'; ?>
+<?php
+session_start();
 
-<section class="min-h-screen bg-gray-100 flex items-center justify-center py-16">
+if (isset($_SESSION['login'])) {
+  header("Location: ../index.php");
+  exit;
+}
 
-  <div class="bg-white shadow-xl rounded-2xl overflow-hidden max-w-5xl w-full grid md:grid-cols-2">
+include '../includes/header.php';
+?>
 
-    <!-- Kiri -->
-    <div class="bg-gradient-to-br from-blue-600 to-blue-800 text-white p-10 flex flex-col justify-center">
+<div class="max-w-md mx-auto mt-10 bg-white p-8 rounded-xl shadow">
 
-      <h1 class="text-4xl font-bold">
-        Selamat Datang 👋
-      </h1>
+  <h2 class="text-2xl font-bold mb-6">
+    Login
+  </h2>
 
-      <p class="mt-5 text-blue-100 leading-8">
-        Masuk ke akun PsychoTest untuk mengerjakan psikotes,
-        melihat status pembayaran, dan mengakses hasil tes.
-      </p>
+  <?php
 
-      <img src="../assets/images/login.png"
-        class="mt-10 w-72 mx-auto">
+  if (isset($_SESSION['error'])) {
+    echo "<div class='bg-red-100 text-red-600 p-3 rounded mb-4'>" . $_SESSION['error'] . "</div>";
+    unset($_SESSION['error']);
+  }
 
-    </div>
+  if (isset($_SESSION['success'])) {
+    echo "<div class='bg-green-100 text-green-600 p-3 rounded mb-4'>" . $_SESSION['success'] . "</div>";
+    unset($_SESSION['success']);
+  }
 
-    <!-- Kanan -->
-    <div class="p-10">
+  ?>
 
-      <h2 class="text-3xl font-bold text-gray-800">
-        Login
-      </h2>
+  <form action="login_process.php" method="POST">
 
-      <p class="text-gray-500 mt-2">
-        Silakan masuk menggunakan akun Anda.
-      </p>
+    <input
+      type="email"
+      name="email"
+      required
+      placeholder="Email"
+      class="w-full border p-3 rounded mb-4">
 
-      <form action="#" method="POST" class="mt-8">
+    <input
+      type="password"
+      name="password"
+      required
+      placeholder="Password"
+      class="w-full border p-3 rounded mb-4">
 
-        <div class="mb-5">
-          <label class="font-medium">Email</label>
+    <button
+      class="bg-blue-600 text-white w-full py-3 rounded">
 
-          <input
-            type="email"
-            name="email"
-            class="w-full mt-2 border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
-            placeholder="email@example.com">
-        </div>
+      Login
 
-        <div class="mb-6">
-          <label class="font-medium">Password</label>
+    </button>
 
-          <input
-            type="password"
-            name="password"
-            class="w-full mt-2 border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
-            placeholder="********">
-        </div>
+  </form>
 
-        <button
-          class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold">
-
-          Login
-
-        </button>
-
-      </form>
-
-      <p class="text-center mt-6 text-gray-600">
-
-        Belum punya akun?
-
-        <a href="register.php"
-          class="text-blue-600 font-semibold">
-
-          Daftar
-
-        </a>
-
-      </p>
-
-    </div>
-
-  </div>
-
-</section>
+</div>
 
 <?php include '../includes/footer.php'; ?>
