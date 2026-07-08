@@ -66,4 +66,5 @@ PsychoTest/
 ├── index.php
 ├── about.php
 ├── kontak.php
-└── README.md
+├── README.md
+└── struktur.txt
