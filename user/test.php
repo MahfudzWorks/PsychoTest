@@ -175,8 +175,8 @@ $total = count($questions);
           </div>
 
           <button
-
-            class="mt-8 w-full bg-green-600 text-white py-3 rounded-lg">
+            id="finishBtn"
+            class="mt-8 w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg">
 
             Selesai Tes
 

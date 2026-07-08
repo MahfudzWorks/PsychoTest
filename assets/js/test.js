@@ -137,3 +137,18 @@ const interval = setInterval(function () {
     totalSeconds--;
 
 },1000);
+
+const finishBtn = document.getElementById("finishBtn");
+
+finishBtn.addEventListener("click", async function () {
+
+    if (!confirm("Yakin ingin menyelesaikan tes?")) {
+        return;
+    }
+
+    await fetch("../api/finish_test.php", {
+        method: "POST"
+    });
+
+    window.location.href = "finish.php";
+});

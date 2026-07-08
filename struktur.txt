@@ -1,0 +1,69 @@
+PsychoTest/
+│
+├── admin/
+│   ├── dashboard.php          # Dashboard admin
+│   ├── users.php              # Kelola peserta
+│   ├── tests.php              # Kelola jenis tes
+│   ├── questions.php          # CRUD soal
+│   ├── payments.php           # Verifikasi pembayaran
+│   ├── results.php            # Hasil seluruh peserta
+│   ├── reports.php            # Laporan & export
+│   └── profile.php            # Profil admin
+│
+├── auth/
+│   ├── login.php
+│   ├── login_process.php
+│   ├── register.php
+│   ├── register_process.php
+│   └── logout.php
+│
+├── user/
+│   ├── dashboard.php          # Dashboard peserta
+│   ├── start.php              # Petunjuk tes
+│   ├── test.php               # Halaman mengerjakan tes
+│   ├── finish.php             # Status setelah tes
+│   ├── payment.php            # Pembayaran QRIS
+│   ├── result.php             # Hasil psikotes
+│   ├── history.php            # Riwayat tes
+│   └── profile.php            # Profil peserta
+│
+├── api/
+│   ├── get_question.php       # Mengambil soal
+│   ├── save_answer.php        # Simpan jawaban
+│   ├── finish_test.php        # Akhiri tes
+│   ├── get_progress.php       # Progress pengerjaan
+│   ├── timer.php              # Sinkronisasi timer
+│
+├── assets/
+│   ├── css/
+│   │   └── style.css
+│   │
+│   ├── js/
+│   │   ├── test.js
+│   │   ├── dashboard.js
+│   │   └── payment.js
+│   │
+│   ├── images/
+│   │   ├── hero.png
+│   │   ├── qris.png
+│   │   └── logo.png
+│   │
+│   └── uploads/
+│       ├── payments/
+│       └── profiles/
+│
+├── config/
+│   ├── database.php
+│
+├── includes/
+│   ├── header.php
+│   ├── footer.php
+│   ├── navbar.php
+│   ├── sidebar_admin.php
+│   ├── sidebar_user.php
+│   └── auth.php
+│
+├── index.php
+├── about.php
+├── kontak.php
+└── README.md
