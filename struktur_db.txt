@@ -1,0 +1,109 @@
+=====================================================
+DATABASE : PsychoTest
+=====================================================
+
+1. Table : questions
+-----------------------------------------------------
+id
+test_id
+question
+option_a
+option_b
+option_c
+option_d
+option_e
+answer
+created_at
+
+
+2. Table : tests
+-----------------------------------------------------
+id
+title
+description
+duration
+total_questions
+status
+created_at
+
+
+3. Table : users
+-----------------------------------------------------
+id
+fullname
+email
+password
+role
+status
+created_at
+
+
+4. Table : user_answers
+-----------------------------------------------------
+id
+user_test_id
+question_id
+answer
+created_at
+
+
+5. Table : user_tests
+-----------------------------------------------------
+id
+user_id
+test_id
+start_time
+end_time
+status
+score
+created_at
+remaining_time
+payment_status
+
+
+=====================================================
+RELASI DATABASE
+=====================================================
+
+tests (id)
+    │
+    └──< questions.test_id
+
+users (id)
+    │
+    └──< user_tests.user_id
+
+tests (id)
+    │
+    └──< user_tests.test_id
+
+user_tests (id)
+    │
+    └──< user_answers.user_test_id
+
+questions (id)
+    │
+    └──< user_answers.question_id
+
+
+=====================================================
+KETERANGAN
+=====================================================
+
+questions
+- Menyimpan seluruh soal beserta pilihan jawaban dan kunci jawaban.
+
+tests
+- Menyimpan informasi mengenai paket tes psikotes.
+
+users
+- Menyimpan data pengguna (Admin dan User).
+
+user_tests
+- Menyimpan riwayat pengerjaan tes oleh setiap pengguna,
+  termasuk nilai, status, waktu mulai, waktu selesai,
+  sisa waktu, dan status pembayaran.
+
+user_answers
+- Menyimpan jawaban setiap soal yang dipilih oleh pengguna
+  selama mengerjakan tes.
