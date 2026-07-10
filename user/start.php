@@ -1,32 +1,93 @@
 <?php
+
 session_start();
+
+require "../config/database.php";
+
+/* =====================================
+   LOGIN
+===================================== */
 
 if (!isset($_SESSION['login'])) {
   header("Location: ../auth/login.php");
   exit;
 }
 
+/* =====================================
+   VALIDASI ID TEST
+===================================== */
+
+if (!isset($_GET['id'])) {
+
+  header("Location: dashboard.php");
+  exit;
+}
+
+$test_id = (int) $_GET['id'];
+
+/* =====================================
+   DATA USER
+===================================== */
+
+$user_id  = $_SESSION['id'];
 $fullname = $_SESSION['fullname'];
+
+/* =====================================
+   AMBIL DATA TEST
+===================================== */
+
+$query = mysqli_query($conn, "
+SELECT *
+FROM tests
+WHERE id='$test_id'
+AND status='active'
+");
+
+if (mysqli_num_rows($query) == 0) {
+
+  echo "<script>
+
+    alert('Tes tidak ditemukan.');
+
+    window.location='dashboard.php';
+
+    </script>";
+
+  exit;
+}
+
+$test = mysqli_fetch_assoc($query);
+
 ?>
 
 <!DOCTYPE html>
+
 <html lang="id">
 
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
   <title>Persiapan Tes | PsychoTest</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
 
-  <link rel="stylesheet"
+  <link
+    rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
 </head>
 
 <body class="bg-gray-100 font-[Poppins]">
+
+  <!-- Navbar -->
 
   <nav class="bg-white shadow">
 
@@ -34,13 +95,18 @@ $fullname = $_SESSION['fullname'];
 
       <div class="flex justify-between items-center h-20">
 
-        <a href="dashboard.php"
+        <a
+          href="dashboard.php"
           class="text-3xl font-bold text-blue-600">
+
           🧠 PsychoTest
+
         </a>
 
         <span class="font-semibold text-gray-700">
+
           <?= htmlspecialchars($fullname); ?>
+
         </span>
 
       </div>
@@ -48,6 +114,8 @@ $fullname = $_SESSION['fullname'];
     </div>
 
   </nav>
+
+  <!-- Content -->
 
   <section class="max-w-5xl mx-auto py-10 px-6">
 
@@ -57,19 +125,21 @@ $fullname = $_SESSION['fullname'];
 
         <h1 class="text-4xl font-bold">
 
-          Persiapan Sebelum Tes
+          <?= htmlspecialchars($test['title']); ?>
 
         </h1>
 
         <p class="mt-3 text-blue-100 text-lg">
 
-          Bacalah petunjuk berikut dengan seksama sebelum memulai tes.
+          <?= htmlspecialchars($test['description']); ?>
 
         </p>
 
       </div>
 
       <div class="p-10">
+
+        <!-- Informasi Tes -->
 
         <div class="grid md:grid-cols-3 gap-6 mb-10">
 
@@ -78,11 +148,15 @@ $fullname = $_SESSION['fullname'];
             <i class="fa-solid fa-file-lines text-4xl text-blue-600"></i>
 
             <h3 class="font-bold mt-4">
+
               Jumlah Soal
+
             </h3>
 
-            <p class="text-gray-600 mt-2">
-              100 Soal
+            <p class="text-gray-600 mt-2 text-lg font-semibold">
+
+              <?= $test['total_questions']; ?> Soal
+
             </p>
 
           </div>
@@ -92,36 +166,46 @@ $fullname = $_SESSION['fullname'];
             <i class="fa-solid fa-clock text-4xl text-orange-500"></i>
 
             <h3 class="font-bold mt-4">
+
               Durasi
+
             </h3>
 
-            <p class="text-gray-600 mt-2">
-              90 Menit
+            <p class="text-gray-600 mt-2 text-lg font-semibold">
+
+              <?= $test['duration']; ?> Menit
+
             </p>
 
           </div>
 
           <div class="bg-green-50 rounded-xl p-6 text-center">
 
-            <i class="fa-solid fa-circle-check text-4xl text-green-600"></i>
+            <i class="fa-solid fa-money-bill-wave text-4xl text-green-600"></i>
 
             <h3 class="font-bold mt-4">
-              Kesempatan
+
+              Biaya Tes
+
             </h3>
 
-            <p class="text-gray-600 mt-2">
-              1 Kali
+            <p class="text-gray-600 mt-2 text-lg font-semibold">
+
+              Rp <?= number_format($test['price'], 0, ",", "."); ?>
+
             </p>
 
           </div>
 
         </div>
 
+        <!-- Petunjuk -->
+
         <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-xl">
 
           <h2 class="text-2xl font-bold mb-4">
 
-            Petunjuk Tes
+            Petunjuk Pengerjaan Tes
 
           </h2>
 
@@ -133,29 +217,34 @@ $fullname = $_SESSION['fullname'];
 
             <li>✅ Jangan menutup browser selama tes berlangsung.</li>
 
-            <li>✅ Waktu akan berjalan otomatis setelah tes dimulai.</li>
+            <li>✅ Timer akan berjalan otomatis setelah tes dimulai.</li>
 
-            <li>✅ Jawaban dapat diubah sebelum waktu habis.</li>
+            <li>✅ Jawaban masih dapat diubah sebelum waktu habis.</li>
 
-            <li>✅ Setelah waktu habis, jawaban akan dikirim otomatis.</li>
+            <li>✅ Tes hanya dapat dikerjakan satu kali.</li>
 
-            <li>✅ Hasil dapat dilihat setelah pembayaran diverifikasi admin.</li>
+            <li>✅ Hasil tes dapat dilihat setelah pembayaran diverifikasi oleh admin.</li>
 
           </ul>
 
         </div>
+        <!-- Persetujuan -->
 
         <div class="mt-8">
 
           <label class="flex items-start gap-3">
 
-            <input type="checkbox"
+            <input
+              type="checkbox"
               id="agree"
               class="mt-1 w-5 h-5">
 
-            <span>
+            <span class="text-gray-700 leading-7">
 
-              Saya telah membaca seluruh petunjuk dan siap mengikuti tes psikologi.
+              Saya telah membaca seluruh petunjuk di atas dan
+              memahami tata cara pelaksanaan tes psikologi.
+              Saya bersedia mengikuti tes dengan jujur dan
+              bertanggung jawab.
 
             </span>
 
@@ -163,10 +252,15 @@ $fullname = $_SESSION['fullname'];
 
         </div>
 
+        <!-- Tombol -->
+
         <div class="mt-10 flex justify-between">
 
-          <a href="dashboard.php"
-            class="px-8 py-3 rounded-xl bg-gray-300 hover:bg-gray-400">
+          <a
+            href="dashboard.php"
+            class="px-8 py-3 rounded-xl bg-gray-300 hover:bg-gray-400 transition">
+
+            <i class="fa-solid fa-arrow-left mr-2"></i>
 
             Kembali
 
@@ -175,7 +269,7 @@ $fullname = $_SESSION['fullname'];
           <button
             id="startBtn"
             disabled
-            class="px-8 py-3 rounded-xl bg-blue-600 text-white opacity-50 cursor-not-allowed">
+            class="px-8 py-3 rounded-xl bg-blue-600 text-white opacity-50 cursor-not-allowed transition">
 
             <i class="fa-solid fa-play mr-2"></i>
 
@@ -193,29 +287,39 @@ $fullname = $_SESSION['fullname'];
 
   <script>
     const agree = document.getElementById("agree");
-    const btn = document.getElementById("startBtn");
+    const startBtn = document.getElementById("startBtn");
 
     agree.addEventListener("change", function() {
 
       if (this.checked) {
 
-        btn.disabled = false;
+        startBtn.disabled = false;
 
-        btn.classList.remove("opacity-50", "cursor-not-allowed");
+        startBtn.classList.remove(
+          "opacity-50",
+          "cursor-not-allowed"
+        );
 
       } else {
 
-        btn.disabled = true;
+        startBtn.disabled = true;
 
-        btn.classList.add("opacity-50", "cursor-not-allowed");
+        startBtn.classList.add(
+          "opacity-50",
+          "cursor-not-allowed"
+        );
 
       }
 
     });
 
-    btn.addEventListener("click", function() {
+    startBtn.addEventListener("click", function() {
 
-      window.location.href = "exam.php";
+      if (!confirm("Apakah Anda yakin ingin memulai tes? Waktu tes akan langsung berjalan setelah dimulai.")) {
+        return;
+      }
+
+      window.location.href = "start_test.php?id=<?= $test['id']; ?>";
 
     });
   </script>

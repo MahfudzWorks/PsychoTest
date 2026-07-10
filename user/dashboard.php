@@ -71,7 +71,7 @@ $fullname = $_SESSION['fullname'];
 
       <h2 class="text-2xl mt-2 font-semibold">
 
-        <?= htmlspecialchars($username) ?>
+        <?= htmlspecialchars($fullname) ?>
 
       </h2>
 
