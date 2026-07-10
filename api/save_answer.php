@@ -4,50 +4,166 @@ session_start();
 
 require "../config/database.php";
 
-header("Content-Type: application/json");
+/* =====================================
+   LOGIN
+===================================== */
 
 if (!isset($_SESSION['login'])) {
 
-  exit;
+  http_response_code(401);
+  exit("Unauthorized");
 }
 
-$user_id = $_SESSION['id'];
+if ($_SERVER['REQUEST_METHOD'] != "POST") {
 
-$user_test_id = (int)$_POST['user_test_id'];
+  http_response_code(405);
+  exit("Method Not Allowed");
+}
 
-$question_id = (int)$_POST['question_id'];
+/* =====================================
+   VALIDASI INPUT
+===================================== */
 
-$answer = $_POST['answer'];
+$user_test_id = isset($_POST['user_test_id'])
+  ? (int) $_POST['user_test_id']
+  : 0;
 
-$stmt = mysqli_prepare($conn, "
-INSERT INTO user_answers
-(user_test_id,question_id,answer)
+$question_id = isset($_POST['question_id'])
+  ? (int) $_POST['question_id']
+  : 0;
 
-VALUES(?,?,?)
+$answer = isset($_POST['answer'])
+  ? strtoupper(trim($_POST['answer']))
+  : "";
 
-ON DUPLICATE KEY UPDATE
+/* =====================================
+   VALIDASI JAWABAN
+===================================== */
 
-answer=VALUES(answer)
+$allowedAnswer = ['A', 'B', 'C', 'D', 'E'];
+
+if (
+  $user_test_id <= 0 ||
+  $question_id <= 0 ||
+  !in_array($answer, $allowedAnswer)
+) {
+
+  http_response_code(400);
+  exit("Invalid Data");
+}
+
+/* =====================================
+   VALIDASI USER TEST
+===================================== */
+
+$user_id = (int) $_SESSION['id'];
+
+$check = mysqli_query($conn, "
+
+SELECT id,status
+
+FROM user_tests
+
+WHERE
+id='$user_test_id'
+AND
+user_id='$user_id'
+
+LIMIT 1
+
 ");
 
-mysqli_stmt_bind_param(
+if (mysqli_num_rows($check) == 0) {
 
-  $stmt,
+  http_response_code(403);
+  exit("Access Denied");
+}
 
-  "iis",
+$userTest = mysqli_fetch_assoc($check);
 
-  $user_test_id,
+/* =====================================
+   CEK STATUS
+===================================== */
 
-  $question_id,
+if ($userTest['status'] != 'in_progress') {
 
-  $answer
+  http_response_code(400);
+  exit("Test Finished");
+}
 
-);
+/* =====================================
+   CEK JAWABAN
+===================================== */
 
-mysqli_stmt_execute($stmt);
+$exist = mysqli_query($conn, "
 
-echo json_encode([
+SELECT id
 
-  "success" => true
+FROM user_answers
 
-]);
+WHERE
+user_test_id='$user_test_id'
+AND
+question_id='$question_id'
+
+LIMIT 1
+
+");
+
+if (mysqli_num_rows($exist) > 0) {
+
+  /* ===========================
+       UPDATE
+    =========================== */
+
+  mysqli_query($conn, "
+
+    UPDATE user_answers
+
+    SET
+
+    answer='$answer'
+
+    WHERE
+
+    user_test_id='$user_test_id'
+
+    AND
+
+    question_id='$question_id'
+
+    ");
+} else {
+
+  /* ===========================
+       INSERT
+    =========================== */
+
+  mysqli_query($conn, "
+
+    INSERT INTO user_answers(
+
+        user_test_id,
+        question_id,
+        answer,
+        created_at
+
+    )
+
+    VALUES(
+
+        '$user_test_id',
+        '$question_id',
+        '$answer',
+        NOW()
+
+    )
+
+    ");
+}
+
+/* =====================================
+   RESPONSE
+===================================== */
+
+echo "success";
