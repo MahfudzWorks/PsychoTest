@@ -1,0 +1,28 @@
+-- 20 Soal Tes Kemampuan Spasial | test_id = 7
+INSERT INTO `questions` (`test_id`, `question`, `option_a`, `option_b`, `option_c`, `option_d`, `option_e`, `answer`) VALUES
+
+-- Bagian 1: Bentuk & Sudut Pandang (1-7)
+(7, 'Sebuah kubus dilihat dari arah depan, bentuk tampakannya adalah...', 'Persegi', 'Persegi panjang', 'Segitiga', 'Lingkaran', 'Jajar genjang', 'a'),
+(7, 'Sebuah tabung berdiri tegak dilihat dari arah samping, bentuk tampakannya adalah...', 'Lingkaran', 'Persegi', 'Persegi panjang', 'Segitiga', 'Trapesium', 'c'),
+(7, 'Jika sebuah kerucut dilihat dari arah atas, bentuk tampakannya adalah...', 'Segitiga', 'Lingkaran dengan titik di tengah', 'Persegi', 'Setengah lingkaran', 'Oval', 'b'),
+(7, 'Sebuah bola dilihat dari segala arah, bentuk tampakannya selalu...', 'Persegi', 'Segitiga', 'Lingkaran', 'Oval', 'Tidak beraturan', 'c'),
+(7, 'Sebuah balok dengan ukuran panjang 10 cm, lebar 5 cm, dan tinggi 5 cm. Jika dilihat dari arah samping kanan, bentuk yang terlihat adalah...', 'Persegi berukuran 5 × 5 cm', 'Persegi panjang 10 × 5 cm', 'Persegi panjang 10 × 10 cm', 'Segitiga', 'Lingkaran', 'a'),
+(7, 'Sebuah limas persegi dilihat dari arah depan, bentuk yang terlihat adalah...', 'Persegi', 'Segitiga sama kaki', 'Persegi panjang', 'Segitiga siku-siku', 'Jajar genjang', 'b'),
+(7, 'Sebuah prisma segitiga dilihat dari arah atas, bentuk yang terlihat adalah...', 'Segitiga', 'Persegi', 'Persegi panjang', 'Trapesium', 'Segi empat', 'c'),
+
+-- Bagian 2: Lipatan & Bentuk Ruang (8-14)
+(7, 'Jika jaring-jaring berbentuk 6 persegi sama besar disusun dan dilipat, maka akan membentuk bangun ruang...', 'Balok', 'Kubus', 'Prisma', 'Limas', 'Tabung', 'b'),
+(7, 'Jaring-jaring yang terdiri dari 1 persegi dan 4 segitiga sama kaki jika dilipat akan menjadi bangun ruang...', 'Kubus', 'Balok', 'Limas persegi', 'Prisma segitiga', 'Kerucut', 'c'),
+(7, 'Jaring-jaring yang terdiri dari 2 lingkaran sama besar dan 1 persegi panjang jika disusun akan membentuk bangun ruang...', 'Kerucut', 'Tabung', 'Bola', 'Limas', 'Prisma', 'b'),
+(7, 'Jika sebuah kertas berbentuk persegi dilipat menjadi dua bagian sama besar secara vertikal, maka bentuk yang terbentuk adalah...', 'Persegi', 'Persegi panjang', 'Segitiga', 'Trapesium', 'Jajar genjang', 'b'),
+(7, 'Sebuah kertas berbentuk persegi panjang dilipat sehingga kedua ujungnya bertemu, maka bentuk yang terbentuk adalah...', 'Dua persegi panjang lebih kecil', 'Dua persegi', 'Dua segitiga', 'Dua lingkaran', 'Dua jajar genjang', 'a'),
+(7, 'Jika jaring-jaring kerucut dilipat, bagian yang menjadi alasnya adalah...', 'Segitiga', 'Lingkaran', 'Persegi', 'Persegi panjang', 'Setengah lingkaran', 'b'),
+(7, 'Berapa banyak sisi yang dimiliki oleh sebuah kubus?', '4 sisi', '5 sisi', '6 sisi', '8 sisi', '12 sisi', 'c'),
+
+-- Bagian 3: Posisi & Arah Ruang (15-20)
+(7, 'Jika Anda menghadap ke arah Utara, lalu berputar ke kanan sejauh 90 derajat, maka Anda sekarang menghadap ke arah...', 'Barat', 'Timur', 'Selatan', 'Tenggara', 'Barat Laut', 'b'),
+(7, 'Jika Anda menghadap ke arah Barat, lalu berputar ke kiri sejauh 180 derajat, maka arah hadap Anda sekarang adalah...', 'Timur', 'Barat', 'Utara', 'Selatan', 'Tenggara', 'a'),
+(7, 'Arah yang berada di antara Utara dan Timur disebut...', 'Barat Laut', 'Tenggara', 'Timur Laut', 'Barat Daya', 'Selatan', 'c'),
+(7, 'Benda A berada di sebelah kanan benda B, dan benda B berada di sebelah kanan benda C. Maka posisi benda C berada di sebelah...', 'Kiri benda A', 'Kanan benda A', 'Depan benda A', 'Belakang benda A', 'Sama lurus dengan benda A', 'a'),
+(7, 'Sebuah titik berada 5 satuan ke timur dan 3 satuan ke utara dari titik awal. Jika dipindahkan 3 satuan ke barat dan 2 satuan ke selatan, maka posisinya sekarang berada...', '2 satuan ke timur dan 1 satuan ke utara', '2 satuan ke barat dan 1 satuan ke selatan', '5 satuan ke timur dan 3 satuan ke utara', 'Tepat di titik awal', '3 satuan ke timur dan 2 satuan ke utara', 'a'),
+(7, 'Jika sebuah kotak diletakkan di atas meja, dan sebuah buku diletakkan di atas kotak, maka posisi meja berada...', 'Di atas kotak', 'Di bawah kotak', 'Di atas buku', 'Di samping kotak', 'Di depan kotak', 'b');

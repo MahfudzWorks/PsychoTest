@@ -1,0 +1,38 @@
+-- 30 Soal Tes Kemampuan Numerik | test_id = 6
+INSERT INTO `questions` (`test_id`, `question`, `option_a`, `option_b`, `option_c`, `option_d`, `option_e`, `answer`) VALUES
+
+-- Bagian 1: Hitungan Dasar & Persentase (1-10)
+(6, 'Berapakah hasil dari 125 + 375 - 225?', '250', '275', '300', '325', '350', 'b'),
+(6, 'Hasil dari 15% dari 600 adalah...', '75', '80', '90', '100', '120', 'c'),
+(6, 'Jika 20% dari sebuah bilangan adalah 80, maka bilangan tersebut adalah...', '200', '300', '400', '500', '600', 'c'),
+(6, 'Berapakah hasil dari 2,5% × 1.200?', '25', '30', '35', '40', '45', 'b'),
+(6, 'Harga barang semula Rp400.000, mendapat diskon 15%. Harga yang harus dibayar adalah...', 'Rp320.000', 'Rp330.000', 'Rp340.000', 'Rp350.000', 'Rp360.000', 'b'),
+(6, 'Jika harga barang naik 20% menjadi Rp600.000, maka harga semulanya adalah...', 'Rp450.000', 'Rp480.000', 'Rp500.000', 'Rp520.000', 'Rp550.000', 'c'),
+(6, 'Berapakah hasil dari 3/8 dari 480?', '150', '160', '170', '180', '200', 'd'),
+(6, 'Manakah nilai yang paling besar?', '0,62', '61%', '3/5', '5/8', '0,59', 'd'),
+(6, 'Hasil dari √225 + √144 adalah...', '25', '27', '29', '31', '33', 'b'),
+(6, 'Berapakah nilai dari 12 × 15 ÷ 9 + 25?', '35', '40', '45', '50', '55', 'c'),
+
+-- Bagian 2: Pola Bilangan & Urutan (11-18)
+(6, 'Angka selanjutnya dari pola: 2, 6, 12, 20, 30, ... adalah...', '40', '42', '44', '46', '48', 'b'),
+(6, 'Pola: 4, 9, 19, 39, 79, ... Angka berikutnya adalah...', '119', '139', '159', '179', '199', 'c'),
+(6, 'Angka yang hilang: 3, 5, 9, 15, ?, 33', '21', '23', '25', '27', '29', 'b'),
+(6, 'Pola: 1, 3, 7, 15, 31, ... Angka ke-7 adalah...', '63', '95', '127', '159', '191', 'c'),
+(6, 'Urutan: 100, 95, 85, 70, 50, ... Angka selanjutnya adalah...', '25', '30', '35', '40', '45', 'a'),
+(6, 'Jika 2 → 8, 3 → 27, 4 → 64, maka 5 → ?', '100', '125', '150', '175', '200', 'b'),
+(6, 'Angka yang cocok: 7, 14, 28, 56, ?, 224', '98', '104', '112', '126', '140', 'c'),
+(6, 'Pola: 121, 100, 81, 64, ... Angka berikutnya adalah...', '36', '40', '42', '45', '49', 'e'),
+
+-- Bagian 3: Perbandingan & Soal Cerita (19-30)
+(6, 'Rasio uang A dan B adalah 3 : 4. Jika jumlah uang mereka Rp1.400.000, maka uang B adalah...', 'Rp500.000', 'Rp600.000', 'Rp700.000', 'Rp800.000', 'Rp900.000', 'd'),
+(6, 'Jika 6 orang dapat menyelesaikan pekerjaan dalam 8 hari, maka 12 orang dapat menyelesaikannya dalam waktu...', '3 hari', '4 hari', '5 hari', '6 hari', '7 hari', 'b'),
+(6, 'Sebuah mobil melaju dengan kecepatan 75 km/jam selama 2 jam 20 menit. Jarak yang ditempuh adalah...', '150 km', '160 km', '170 km', '175 km', '180 km', 'e'),
+(6, 'Jika x + 2y = 20 dan y = 5, maka nilai 3x adalah...', '10', '15', '20', '25', '30', 'e'),
+(6, 'Sebuah persegi panjang memiliki keliling 90 cm dan perbandingan panjang : lebar = 3 : 2. Luasnya adalah...', '324 cm²', '360 cm²', '384 cm²', '400 cm²', '432 cm²', 'b'),
+(6, 'Harga 8 buku adalah Rp120.000. Maka harga 15 buku yang sama adalah...', 'Rp200.000', 'Rp215.000', 'Rp225.000', 'Rp240.000', 'Rp250.000', 'c'),
+(6, 'Sebuah tabung memiliki jari-jari 7 cm dan tinggi 10 cm. Volumenya adalah... (π = 22/7)', '1.440 cm³', '1.540 cm³', '1.640 cm³', '1.740 cm³', '1.840 cm³', 'b'),
+(6, 'Jika hari ini hari Senin, maka 90 hari lagi adalah hari...', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu', 'c'),
+(6, 'Rasio umur Ayah dan Anak adalah 7 : 2. Jika selisih umur mereka 25 tahun, maka umur Ayah sekarang adalah...', '30 tahun', '35 tahun', '40 tahun', '45 tahun', '50 tahun', 'b'),
+(6, 'Sebuah tangki terisi penuh dalam waktu 12 jam menggunakan 2 keran. Jika dipakai 3 keran, waktu yang dibutuhkan adalah...', '6 jam', '7 jam', '8 jam', '9 jam', '10 jam', 'c'),
+(6, 'Hasil penjualan sebuah toko naik 10% pada bulan pertama, lalu naik lagi 10% pada bulan kedua. Jika awalnya Rp10.000.000, maka hasil akhirnya adalah...', 'Rp11.500.000', 'Rp11.800.000', 'Rp12.000.000', 'Rp12.100.000', 'Rp12.500.000', 'd'),
+(6, 'Jika 5 pekerja dapat menyelesaikan pekerjaan dalam 16 hari, maka agar selesai dalam 10 hari dibutuhkan pekerja sebanyak...', '7 orang', '8 orang', '9 orang', '10 orang', '12 orang', 'b');

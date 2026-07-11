@@ -1,0 +1,48 @@
+-- 40 Soal Tes Potensi Akademik (TPA) | test_id = 3
+INSERT INTO `questions` (`test_id`, `question`, `option_a`, `option_b`, `option_c`, `option_d`, `option_e`, `answer`) VALUES
+
+-- Bagian 1: Kemampuan Verbal (1-15)
+(3, 'Sinonim dari kata "Analisis" adalah...', 'Penguraian', 'Penggabungan', 'Penyatuan', 'Penjumlahan', 'Perkiraan', 'a'),
+(3, 'Lawan kata dari "Konstruktif" adalah...', 'Membangun', 'Merusak', 'Membantu', 'Memperbaiki', 'Mengembangkan', 'b'),
+(3, 'Persamaan makna kata "Konsisten" adalah...', 'Berubah-ubah', 'Tetap', 'Lambat', 'Cepat', 'Ragu', 'b'),
+(3, 'Lawan kata dari "Efisien" adalah...', 'Tepat', 'Boros', 'Cepat', 'Baik', 'Mudah', 'b'),
+(3, 'Sinonim dari kata "Signifikan" adalah...', 'Tidak berarti', 'Penting', 'Kecil', 'Biasa', 'Sama', 'b'),
+(3, 'Lawan kata dari "Optimis" adalah...', 'Percaya diri', 'Pesimis', 'Semangat', 'Yakin', 'Harapan', 'b'),
+(3, 'Persamaan makna kata "Mandat" adalah...', 'Perintah', 'Larangan', 'Saran', 'Usulan', 'Pendapat', 'a'),
+(3, 'Lawan kata dari "Objektif" adalah...', 'Netral', 'Subjektif', 'Adil', 'Jelas', 'Tepat', 'b'),
+(3, 'Jika "Buku : Membaca", maka "Peta : ..."', 'Melihat', 'Menulis', 'Mempelajari', 'Menemukan arah', 'Menyimpan', 'd'),
+(3, 'Jika "Dokter : Rumah Sakit", maka "Guru : ..."', 'Sekolah', 'Perpustakaan', 'Pasar', 'Taman', 'Rumah', 'a'),
+(3, 'Manakah kata yang tidak termasuk dalam kelompok berikut? Kambing, Sapi, Kerbau, Harimau, Domba', 'Kambing', 'Sapi', 'Harimau', 'Kerbau', 'Domba', 'c'),
+(3, 'Manakah susunan kata yang paling logis? 1. Menanam 2. Memanen 3. Menyiram 4. Tumbuh', '1-3-4-2', '1-4-3-2', '3-1-4-2', '2-1-3-4', '4-1-3-2', 'a'),
+(3, 'Sinonim dari kata "Kompeten" adalah...', 'Mampu', 'Kurang', 'Ragu', 'Lambat', 'Sulit', 'a'),
+(3, 'Lawan kata dari "Ekspansi" adalah...', 'Perluasan', 'Penyempitan', 'Pertumbuhan', 'Pengembangan', 'Penyebaran', 'b'),
+(3, 'Jika "Kayu : Meja", maka "Kain : ..."', 'Pakaian', 'Benang', 'Warna', 'Jahitan', 'Kapas', 'a'),
+
+-- Bagian 2: Kemampuan Numerik (16-30)
+(3, 'Urutan bilangan: 2, 5, 11, 23, 47, ... Bilangan selanjutnya adalah...', '79', '89', '95', '97', '101', 'd'),
+(3, 'Berapakah hasil dari 12,5% dari 800?', '80', '90', '100', '120', '150', 'c'),
+(3, 'Jika 6 pekerja dapat menyelesaikan pekerjaan dalam 12 hari, maka 9 pekerja membutuhkan waktu...', '6 hari', '7 hari', '8 hari', '9 hari', '10 hari', 'c'),
+(3, 'Sebuah kendaraan melaju dengan kecepatan 60 km/jam selama 2 jam 30 menit. Jarak yang ditempuh adalah...', '120 km', '130 km', '140 km', '150 km', '160 km', 'd'),
+(3, 'Jika 3x - 7 = 23, maka nilai 5x + 2 adalah...', '42', '47', '52', '57', '62', 'd'),
+(3, 'Urutan bilangan: 1, 4, 9, 16, 25, ... Bilangan ke-8 adalah...', '49', '56', '64', '72', '81', 'c'),
+(3, 'Berapakah hasil dari √625 + ∛27?', '28', '30', '32', '34', '36', 'a'),
+(3, 'Sebuah persegi panjang memiliki luas 360 cm² dan lebar 15 cm. Panjangnya adalah...', '20 cm', '22 cm', '24 cm', '26 cm', '28 cm', 'c'),
+(3, 'Jika harga barang naik 25% menjadi Rp500.000, maka harga semula adalah...', 'Rp350.000', 'Rp380.000', 'Rp400.000', 'Rp420.000', 'Rp450.000', 'c'),
+(3, 'Rasio uang A dan B adalah 2 : 5. Jika selisih uang mereka Rp900.000, maka uang B adalah...', 'Rp600.000', 'Rp900.000', 'Rp1.200.000', 'Rp1.500.000', 'Rp1.800.000', 'd'),
+(3, 'Berapakah hasil dari 250 + 150 × 3 - 400?', '200', '300', '400', '500', '600', 'b'),
+(3, 'Sebuah tabung memiliki jari-jari 7 cm dan tinggi 15 cm. Volume tabung tersebut (π = 22/7) adalah...', '2.150 cm³', '2.250 cm³', '2.310 cm³', '2.450 cm³', '2.520 cm³', 'c'),
+(3, 'Jika hari ini hari Rabu, maka 75 hari lagi adalah hari...', 'Jumat', 'Sabtu', 'Minggu', 'Senin', 'Selasa', 'a'),
+(3, 'Manakah nilai yang paling besar?', '0,65', '62%', '2/3', '13/20', '0,6', 'c'),
+(3, 'Jika sebuah tangki terisi penuh dalam 8 jam dengan 3 keran, maka dengan 4 keran waktu yang dibutuhkan adalah...', '4 jam', '5 jam', '6 jam', '7 jam', '8 jam', 'c'),
+
+-- Bagian 3: Kemampuan Logika & Penalaran (31-40)
+(3, 'Jika semua mahasiswa rajin belajar, maka mereka lulus ujian. Andi adalah mahasiswa yang tidak lulus ujian. Maka kesimpulannya adalah...', 'Andi rajin belajar', 'Andi tidak rajin belajar', 'Semua mahasiswa tidak lulus', 'Semua mahasiswa malas', 'Tidak dapat disimpulkan', 'b'),
+(3, 'Jika hari hujan, maka jalanan basah. Hari ini jalanan basah. Maka kesimpulannya adalah...', 'Pasti hujan', 'Bisa jadi hujan atau ada sebab lain', 'Tidak hujan', 'Pasti cerah', 'Jalanan selalu basah', 'b'),
+(3, 'Semua burung memiliki sayap. Merpati adalah burung. Maka kesimpulannya adalah...', 'Merpati bisa terbang', 'Merpati memiliki sayap', 'Semua yang bersayap adalah burung', 'Burung adalah merpati', 'Tidak ada jawaban benar', 'b'),
+(3, 'Jika A lebih tua dari B, B lebih tua dari C, dan D lebih muda dari C. Maka urutan dari yang tertua adalah...', 'A - B - C - D', 'A - C - B - D', 'D - C - B - A', 'B - A - C - D', 'A - B - D - C', 'a'),
+(3, 'Hubungan yang sama dengan "Panas : Api" adalah...', 'Terang : Lampu', 'Air : Dingin', 'Gelap : Malam', 'Cahaya : Sinar', 'Besar : Besi', 'a'),
+(3, 'Jika "Makan : Kenyang", maka "Minum : ..."', 'Lapar', 'Haus', 'Segar', 'Cukup', 'Kenyang', 'c'),
+(3, 'Manakah pernyataan yang paling logis?', 'Jika malam hari maka matahari bersinar', 'Jika air mendidih maka suhunya mencapai 100°C', 'Jika langit mendung maka pasti hujan', 'Jika angin kencang maka pohon tumbang', 'Jika siang hari maka bulan terlihat', 'b'),
+(3, 'Jika X = 3Y dan Y = 2Z, maka nilai X + Y adalah...', '5Z', '6Z', '7Z', '8Z', '9Z', 'd'),
+(3, 'Manakah kelompok yang berbeda dari yang lain?', 'Segitiga', 'Persegi', 'Lingkaran', 'Persegi panjang', 'Jajar genjang', 'c'),
+(3, 'Jika lampu menyala, maka ada aliran listrik. Tidak ada aliran listrik. Maka kesimpulannya adalah...', 'Lampu menyala', 'Lampu tidak menyala', 'Lampu rusak', 'Saklar mati', 'Tidak dapat disimpulkan', 'b');

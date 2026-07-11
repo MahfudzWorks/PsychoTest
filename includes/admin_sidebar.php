@@ -115,7 +115,7 @@ function isActive($folder)
       <ul class="space-y-1.5">
         <li>
           <a
-            href="/PsychoTest/admin/profile.php"
+            href="/PsychoTest/admin/profile/profile.php"
             class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 <?= isActive('profile.php') ?>">
             <i class="fa-solid fa-user w-5 text-center"></i>
             <span>Profil</span>

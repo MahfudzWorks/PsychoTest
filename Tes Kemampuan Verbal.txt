@@ -1,0 +1,40 @@
+-- 30 Soal Tes Kemampuan Verbal | test_id = 5
+INSERT INTO `questions` (`test_id`, `question`, `option_a`, `option_b`, `option_c`, `option_d`, `option_e`, `answer`) VALUES
+
+-- Bagian 1: Persamaan Kata / Sinonim (1-10)
+(5, 'Sinonim dari kata "Aktif" adalah...', 'Pasif', 'Giat', 'Lambat', 'Diam', 'Malas', 'b'),
+(5, 'Persamaan makna kata "Akurat" adalah...', 'Tepat', 'Salah', 'Kurang', 'Ragu', 'Sembarang', 'a'),
+(5, 'Sinonim dari kata "Berkelanjutan" adalah...', 'Terputus', 'Berlanjut', 'Berhenti', 'Terpisah', 'Terbagi', 'b'),
+(5, 'Persamaan makna kata "Cermat" adalah...', 'Teliti', 'Cepat', 'Kasaran', 'Sembarang', 'Terburu-buru', 'a'),
+(5, 'Sinonim dari kata "Daya guna" adalah...', 'Manfaat', 'Kerugian', 'Biaya', 'Tenaga', 'Usaha', 'a'),
+(5, 'Persamaan makna kata "Efektif" adalah...', 'Tepat guna', 'Lambat', 'Sulit', 'Mahal', 'Rumit', 'a'),
+(5, 'Sinonim dari kata "Fasilitas" adalah...', 'Sarana', 'Hambatan', 'Biaya', 'Waktu', 'Tenaga', 'a'),
+(5, 'Persamaan makna kata "Gigih" adalah...', 'Tekun', 'Cepat', 'Mudah', 'Lemah', 'Malas', 'a'),
+(5, 'Sinonim dari kata "Hemat" adalah...', 'Irit', 'Boros', 'Banyak', 'Sering', 'Lebih', 'a'),
+(5, 'Persamaan makna kata "Indah" adalah...', 'Cantik', 'Jelek', 'Kasar', 'Biasa', 'Sederhana', 'a'),
+
+-- Bagian 2: Lawan Kata / Antonim (11-20)
+(5, 'Lawan kata dari "Kuat" adalah...', 'Tangguh', 'Lemah', 'Tegas', 'Kokoh', 'Keras', 'b'),
+(5, 'Lawan kata dari "Lancar" adalah...', 'Lambat', 'Terhambat', 'Cepat', 'Mulus', 'Mudah', 'b'),
+(5, 'Lawan kata dari "Maju" adalah...', 'Berkembang', 'Mundur', 'Tetap', 'Naik', 'Bertambah', 'b'),
+(5, 'Lawan kata dari "Nyata" adalah...', 'Asli', 'Palsu', 'Abstrak', 'Jelas', 'Terbukti', 'c'),
+(5, 'Lawan kata dari "Percaya" adalah...', 'Ragu', 'Yakin', 'Setuju', 'Mengakui', 'Menyetujui', 'a'),
+(5, 'Lawan kata dari "Ramah" adalah...', 'Baik', 'Sopan', 'Dingin', 'Suka', 'Murah senyum', 'c'),
+(5, 'Lawan kata dari "Sukses" adalah...', 'Berhasil', 'Gagal', 'Maju', 'Untung', 'Baik', 'b'),
+(5, 'Lawan kata dari "Tinggi" adalah...', 'Rendah', 'Panjang', 'Lebar', 'Datar', 'Mendatar', 'a'),
+(5, 'Lawan kata dari "Utuh" adalah...', 'Lengkap', 'Terpecah', 'Sempurna', 'Kokoh', 'Baik', 'b'),
+(5, 'Lawan kata dari "Zaman dulu" adalah...', 'Kuno', 'Masa kini', 'Lama', 'Tua', 'Sejarah', 'b'),
+
+-- Bagian 3: Analogi & Hubungan Kata (21-25)
+(5, 'Jika "Penulis : Buku", maka "Pematung : ..."', 'Pahatan', 'Tanah', 'Pahat', 'Kayu', 'Tukang', 'a'),
+(5, 'Jika "Kunci : Pintu", maka "Kancing : ..."', 'Pakaian', 'Gembok', 'Rumah', 'Kotak', 'Laci', 'a'),
+(5, 'Jika "Mata : Melihat", maka "Telinga : ..."', 'Mendengar', 'Merasakan', 'Mencium', 'Mengecap', 'Menyentuh', 'a'),
+(5, 'Jika "Petani : Sawah", maka "Nelayan : ..."', 'Laut', 'Jala', 'Ikan', 'Kapal', 'Pantai', 'a'),
+(5, 'Jika "Kertas : Tulis", maka "Papan tulis : ..."', 'Gambar', 'Tulis', 'Kapur', 'Hapus', 'Baca', 'b'),
+
+-- Bagian 4: Kelompok Kata & Susunan Logis (26-30)
+(5, 'Manakah kata yang tidak termasuk dalam kelompok berikut? Sepatu, Sandal, Topi, Sendal, Kaos kaki', 'Sepatu', 'Sandal', 'Topi', 'Sendal', 'Kaos kaki', 'c'),
+(5, 'Manakah kata yang berbeda dari yang lain? Merakit, Memperbaiki, Membangun, Merusak, Menyusun', 'Merakit', 'Memperbaiki', 'Membangun', 'Merusak', 'Menyusun', 'd'),
+(5, 'Susunan kata yang paling logis: 1. Membeli 2. Memasak 3. Makan 4. Bahan makanan', '1-2-3-4', '4-1-2-3', '1-4-2-3', '2-1-4-3', '4-2-1-3', 'b'),
+(5, 'Manakah kata yang tidak sejenis? Gunung, Lembah, Sungai, Bukit, Dataran tinggi', 'Gunung', 'Lembah', 'Sungai', 'Bukit', 'Dataran tinggi', 'c'),
+(5, 'Susunan peristiwa yang benar: 1. Membayar 2. Memilih barang 3. Membawa pulang 4. Pergi ke toko', '4-2-1-3', '2-4-1-3', '4-1-2-3', '1-2-4-3', '2-1-3-4', 'a');

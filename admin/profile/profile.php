@@ -5,6 +5,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
   exit;
 }
 
+// ✅ Jalur benar: naik 2 tingkat dari folder profile
 include "../../config/database.php";
 $pageTitle = "Profil Saya";
 
@@ -15,26 +16,37 @@ include "../../includes/admin_navbar.php";
 $admin_id = (int)$_SESSION['id'];
 $query = mysqli_query($conn, "SELECT * FROM users WHERE id = '$admin_id' AND role = 'admin' LIMIT 1");
 $user = mysqli_fetch_assoc($query);
+
+// ✅ Jalur foto: dari folder profile masuk ke folder profiles
+$foto = !empty($user['profile_pic'])
+  ? "profiles/" . $user['profile_pic']
+  : "../../assets/images/default.png";
 ?>
 
 <div class="ml-64 mt-16 p-8 min-h-screen bg-gray-50">
 
   <div class="mb-8">
     <h1 class="text-3xl font-bold text-gray-800">Profil Saya</h1>
-    <p class="text-gray-500 mt-1">Kelola informasi akun administrator</p>
+    <p class="text-gray-500 mt-1">Kelola data akun administrator</p>
   </div>
 
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-    <!-- Kartu Profil -->
+    <!-- Info Profil + Foto -->
     <div class="lg:col-span-1">
       <div class="bg-white rounded-xl shadow-md p-6 text-center card-animate">
-        <div class="w-32 h-32 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <i class="fa-solid fa-user text-5xl text-blue-500"></i>
+        <!-- Foto dengan tombol edit -->
+        <div class="relative w-32 h-32 mx-auto mb-4">
+          <img src="<?= htmlspecialchars($foto) ?>" alt="Foto Profil" class="w-full h-full object-cover rounded-full border-4 border-blue-100 shadow">
+          <!-- Tombol Edit Kecil -->
+          <button type="button" onclick="document.getElementById('inputFoto').click()" class="absolute bottom-0 right-0 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full shadow-md transition">
+            <i class="fa-solid fa-pen text-sm"></i>
+          </button>
         </div>
-        <h3 class="text-xl font-bold text-gray-800"><?= htmlspecialchars($user['full_name']) ?></h3>
+
+        <h3 class="text-xl font-bold text-gray-800"><?= htmlspecialchars($user['fullname']) ?></h3>
         <p class="text-gray-500">Administrator</p>
-        <div class="mt-4 pt-4 border-t">
-          <p class="text-sm text-gray-600">Terdaftar sejak: <?= date('d M Y', strtotime($user['created_at'])) ?></p>
+        <div class="mt-4 pt-4 border-t text-sm text-gray-600">
+          Terdaftar sejak: <?= date('d M Y', strtotime($user['created_at'])) ?>
         </div>
       </div>
     </div>
@@ -42,28 +54,25 @@ $user = mysqli_fetch_assoc($query);
     <!-- Form Ubah Data -->
     <div class="lg:col-span-2">
       <div class="bg-white rounded-xl shadow-md p-6 card-animate">
-        <h4 class="text-lg font-semibold text-gray-700 mb-6">Ubah Informasi Akun</h4>
-        <form action="profile_update.php" method="POST">
+        <h4 class="text-lg font-semibold text-gray-700 mb-6">Ubah Data Akun</h4>
+        <form action="profile_update.php" method="POST" enctype="multipart/form-data">
           <input type="hidden" name="id" value="<?= $user['id'] ?>">
+          <!-- Input file tersembunyi -->
+          <input type="file" name="profile_pic" id="inputFoto" accept="image/*" class="hidden">
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div>
               <label class="block text-sm font-medium text-gray-600 mb-1">Nama Lengkap</label>
-              <input type="text" name="full_name" value="<?= htmlspecialchars($user['full_name']) ?>" required class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500">
+              <input type="text" name="fullname" value="<?= htmlspecialchars($user['fullname']) ?>" required class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500">
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-600 mb-1">Username</label>
-              <input type="text" name="username" value="<?= htmlspecialchars($user['username']) ?>" required class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500">
+              <label class="block text-sm font-medium text-gray-600 mb-1">Email</label>
+              <input type="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500">
             </div>
-          </div>
-
-          <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-600 mb-1">Email</label>
-            <input type="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500">
           </div>
 
           <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-600 mb-1">Password Baru <span class="text-gray-400">(kosongkan jika tidak ingin diubah)</span></label>
+            <label class="block text-sm font-medium text-gray-600 mb-1">Password Baru <span class="text-gray-400">(kosongkan jika tidak diubah)</span></label>
             <input type="password" name="password" class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500">
           </div>
 

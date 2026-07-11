@@ -3,6 +3,18 @@ if (!isset($pageTitle)) {
   $pageTitle = "Admin Dashboard";
 }
 ?>
+
+<?php
+// Ambil data admin dari database
+$admin_id = (int)$_SESSION['id'];
+$query_nav = mysqli_query($conn, "SELECT profile_pic, fullname FROM users WHERE id = '$admin_id' LIMIT 1");
+$user_nav = mysqli_fetch_assoc($query_nav);
+
+$foto_nav = !empty($user_nav['profile_pic'])
+  ? "../uploads/profiles/" . $user_nav['profile_pic']
+  : "../assets/img/default.png";
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -13,10 +25,10 @@ if (!isset($pageTitle)) {
 
   <title><?= htmlspecialchars($pageTitle); ?> | PsychoTest System</title>
 
-  <!-- Tailwind CSS v3 -->
+  <!-- Tailwind CSS - Ganti ke versi lokal / CDN alternatif yang lebih stabil -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Konfigurasi Tambahan Tailwind -->
+  <!-- Konfigurasi Warna & Font -->
   <script>
     tailwind.config = {
       theme: {
@@ -37,23 +49,24 @@ if (!isset($pageTitle)) {
     }
   </script>
 
-  <!-- Google Font - Poppins -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Poppins - Ganti ke sumber lain atau gunakan fallback aman -->
+  <style>
+    /* Gunakan font sistem jika Google Font diblokir */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    * {
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    }
+  </style>
 
-  <!-- Chart.js v4 Terbaru -->
+  <!-- Font Awesome - Ganti ke CDN alternatif yang lebih jarang diblokir -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.7.2/css/all.css" crossorigin="anonymous">
+
+  <!-- Chart.js - Tetap gunakan, jarang diblokir -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
 
   <!-- Gaya Kustom -->
   <style>
-    * {
-      font-family: 'Poppins', sans-serif;
-    }
-
     body {
       background-color: #f8fafc;
       font-size: 14px;

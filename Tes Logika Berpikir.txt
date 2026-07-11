@@ -1,0 +1,33 @@
+-- 25 Soal Tes Logika Berpikir | test_id = 4
+INSERT INTO `questions` (`test_id`, `question`, `option_a`, `option_b`, `option_c`, `option_d`, `option_e`, `answer`) VALUES
+
+-- Bagian 1: Penalaran Logis (1-8)
+(4, 'Jika semua hewan menyukai air, dan ikan adalah hewan. Maka kesimpulannya adalah...', 'Ikan tidak menyukai air', 'Ikan menyukai air', 'Semua yang menyukai air adalah ikan', 'Hanya ikan yang menyukai air', 'Tidak dapat disimpulkan', 'b'),
+(4, 'Jika hujan turun, maka tanah menjadi basah. Tanah tidak basah. Maka kesimpulannya adalah...', 'Hujan baru saja turun', 'Hujan tidak turun', 'Tanah selalu basah', 'Pasti ada yang menyiram', 'Tidak ada jawaban benar', 'b'),
+(4, 'Semua buku adalah benda cetak. Sebagian benda cetak berwarna hitam. Maka...', 'Semua buku berwarna hitam', 'Sebagian buku berwarna hitam', 'Sebagian buku adalah benda cetak', 'Semua benda cetak adalah buku', 'Tidak dapat disimpulkan', 'c'),
+(4, 'Jika A lebih berat dari B, dan B lebih berat dari C, maka...', 'A lebih ringan dari C', 'C lebih berat dari A', 'A lebih berat dari C', 'B lebih ringan dari C', 'A, B, dan C sama berat', 'c'),
+(4, 'Jika lampu menyala, maka saklar dalam keadaan tertutup. Saklar terbuka. Maka...', 'Lampu menyala terang', 'Lampu tidak menyala', 'Lampu rusak', 'Ada arus listrik', 'Tidak dapat dipastikan', 'b'),
+(4, 'Semua siswa yang lulus ujian telah belajar. Budi telah belajar. Maka...', 'Budi pasti lulus ujian', 'Budi mungkin lulus ujian', 'Budi tidak lulus ujian', 'Semua siswa lulus ujian', 'Budi pasti tidak lulus', 'b'),
+(4, 'Jika hari libur, maka taman kota ramai dikunjungi. Hari ini taman kota sepi. Maka...', 'Hari ini hari libur', 'Hari ini bukan hari libur', 'Hari ini hujan', 'Taman kota ditutup', 'Tidak ada kesimpulan yang pasti', 'b'),
+(4, 'Semua kucing menyukai ikan. Kucing adalah hewan. Maka...', 'Semua hewan menyukai ikan', 'Semua yang menyukai ikan adalah kucing', 'Beberapa hewan menyukai ikan', 'Ikan disukai semua hewan', 'Tidak dapat disimpulkan', 'c'),
+
+-- Bagian 2: Pola Angka & Urutan (9-16)
+(4, 'Berapakah angka selanjutnya dalam pola: 2, 4, 7, 11, 16, ...', '20', '21', '22', '23', '24', 'b'),
+(4, 'Pola angka: 3, 6, 12, 24, 48, ... Angka ke-7 adalah...', '72', '96', '120', '144', '192', 'b'),
+(4, 'Berapakah angka yang hilang: 5, 10, 9, 18, 17, ?, 33', '30', '32', '34', '36', '38', 'b'),
+(4, 'Pola: 1, 4, 9, 16, 25, ... Angka selanjutnya adalah...', '30', '32', '34', '36', '40', 'd'),
+(4, 'Berapakah angka yang cocok: 8, 12, 16, 20, ?, 28', '22', '23', '24', '25', '26', 'c'),
+(4, 'Pola: 2, 5, 11, 23, 47, ... Angka selanjutnya adalah...', '79', '89', '95', '97', '101', 'd'),
+(4, 'Jika 3 → 9, 4 → 16, 5 → 25, maka 7 → ?', '35', '42', '49', '56', '63', 'c'),
+(4, 'Berapakah angka berikutnya: 100, 81, 64, 49, ...', '32', '36', '40', '42', '45', 'b'),
+
+-- Bagian 3: Hubungan Kata & Analogi (17-25)
+(4, 'Hubungan "Pohon : Kayu" sama dengan...', 'Bunga : Warna', 'Sapi : Daging', 'Batu : Berat', 'Kertas : Buku', 'Air : Minum', 'b'),
+(4, 'Jika "Makan : Kenyang", maka "Istirahat : ..."', 'Lelah', 'Segar', 'Tidur', 'Santai', 'Rileks', 'b'),
+(4, 'Manakah yang memiliki hubungan sama dengan "Dokter : Pasien"?', 'Guru : Sekolah', 'Petani : Sawah', 'Polisi : Pelanggar', 'Penjual : Pembeli', 'Sopir : Mobil', 'd'),
+(4, 'Jika "Atas : Bawah", maka "Kiri : ..."', 'Depan', 'Belakang', 'Tengah', 'Kanan', 'Samping', 'd'),
+(4, 'Manakah kelompok yang berbeda dari yang lain?', 'Persegi', 'Segitiga', 'Lingkaran', 'Jajar genjang', 'Trapesium', 'c'),
+(4, 'Jika "Besi : Padat", maka "Air : ..."', 'Cair', 'Bebas', 'Bening', 'Dingin', 'Basah', 'a'),
+(4, 'Manakah urutan peristiwa yang paling logis? 1. Menyiram 2. Tumbuh 3. Menanam 4. Berbunga', '1-2-3-4', '3-1-2-4', '3-2-1-4', '2-3-1-4', '4-3-2-1', 'b'),
+(4, 'Jika "Kamera : Memotret", maka "Pensil : ..."', 'Menghapus', 'Menggambar', 'Mengasah', 'Menyimpan', 'Membawa', 'b'),
+(4, 'Manakah pernyataan yang paling logis?', 'Jika langit gelap maka pasti malam hari', 'Jika ada asap maka pasti ada api', 'Jika hujan turun maka langit biasanya mendung', 'Jika pohon tumbuh maka pasti diberi pupuk', 'Jika mobil bergerak maka pengemudi sedang tidur', 'c');

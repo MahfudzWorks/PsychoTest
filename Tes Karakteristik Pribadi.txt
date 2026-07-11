@@ -1,0 +1,92 @@
+-- 45 Soal Tes Karakteristik Pribadi | test_id = 8
+INSERT INTO `questions` (`test_id`, `question`, `option_a`, `option_b`, `option_c`, `option_d`, `option_e`, `answer`) VALUES
+
+(8, 'Anda sedang mengerjakan tugas penting yang harus selesai hari ini, tiba-tiba rekan kerja meminta bantuan menyelesaikan pekerjaannya. Sikap Anda adalah...', 'Menolak karena sedang sibuk', 'Membantu sebentar saja lalu segera kembali ke tugas sendiri', 'Menghentikan tugas sendiri dan membantu sepenuhnya', 'Menyuruhnya meminta bantuan orang lain', 'Membantu setelah tugas Anda selesai dengan baik', 'e'),
+
+(8, 'Atasan mengubah aturan kerja yang sudah biasa Anda jalani. Sikap Anda adalah...', 'Merasa terganggu dan enggan mengikuti aturan baru', 'Mempelajari perubahan tersebut dan menyesuaikan diri sebaik mungkin', 'Mengikuti saja tanpa memahami alasannya', 'Menyalahkan keputusan atasan', 'Berusaha bekerja seperti biasa saja', 'b'),
+
+(8, 'Dalam rapat kelompok, pendapat Anda berbeda dengan pendapat mayoritas anggota. Sikap Anda adalah...', 'Memaksakan pendapat agar diterima semua orang', 'Mendengarkan dengan baik, lalu menyampaikan alasan pendapat Anda dengan sopan', 'Diam saja dan mengikuti pendapat mayoritas', 'Marah karena pendapat tidak didengar', 'Keluar dari ruangan rapat', 'b'),
+
+(8, 'Anda menemukan kesalahan kecil dalam laporan yang sudah diserahkan ke atasan. Sikap Anda adalah...', 'Membiarkannya saja karena tidak terlalu berpengaruh', 'Segera melaporkan dan meminta izin untuk memperbaikinya', 'Menyalahkan orang lain yang membantu mengerjakan', 'Menyembunyikan kesalahan tersebut', 'Menunggu sampai atasan menanyakannya', 'b'),
+
+(8, 'Pekerjaan Anda menumpuk dan waktunya sangat terbatas. Sikap Anda adalah...', 'Merasa panik dan bingung harus mulai dari mana', 'Membagi tugas menjadi bagian kecil dan menyelesaikannya secara bertahap', 'Mengeluh dan meminta perpanjangan waktu', 'Mengerjakan semuanya sekaligus agar cepat selesai', 'Menunda-nunda sampai mendekati batas waktu', 'b'),
+
+(8, 'Atasan memberikan tugas tambahan yang bukan bagian dari tanggung jawab Anda. Sikap Anda adalah...', 'Menolak dengan alasan sudah punya tugas sendiri', 'Menerima dan berusaha menyelesaikannya dengan sebaik mungkin', 'Menerima tapi mengerjakan dengan asal-asalan', 'Menerima tapi terus mengeluh', 'Meminta imbalan tambahan terlebih dahulu', 'b'),
+
+(8, 'Anda melihat rekan kerja melakukan kesalahan yang bisa mengganggu hasil kerja tim. Sikap Anda adalah...', 'Membiarkan saja agar tidak menyinggung perasaannya', 'Mengingatkan dengan bahasa yang sopan dan memberikan solusi', 'Langsung melaporkan ke atasan tanpa bicara dulu', 'Membicarakan kesalahannya ke rekan lain', 'Menertawakan kesalahan tersebut', 'b'),
+
+(8, 'Dalam menyelesaikan pekerjaan, hal yang paling Anda utamakan adalah...', 'Kecepatan selesai meski hasilnya kurang rapi', 'Ketepatan, kualitas, dan sesuai standar yang ditetapkan', 'Mengerjakan seminimal mungkin agar tidak lelah', 'Menyelesaikan hanya jika diawasi', 'Menyelesaikan dengan bantuan orang lain', 'b'),
+
+(8, 'Anda menerima kritik dari atasan mengenai hasil kerja Anda. Sikap Anda adalah...', 'Marah dan membela diri sekuat tenaga', 'Mendengarkan dengan tenang, memahami maksudnya, dan menjadikannya perbaikan', 'Mengabaikan dan menganggap kritik itu tidak adil', 'Membalas dengan kritik juga', 'Berpura-pura setuju tapi tidak mengubah cara kerja', 'b'),
+
+(8, 'Ada kesempatan untuk mengikuti pelatihan guna meningkatkan kemampuan kerja. Sikap Anda adalah...', 'Tidak tertarik karena sudah merasa cukup mampu', 'Mengikuti jika tidak mengganggu waktu istirahat', 'Mengikuti dengan antusias untuk menambah pengetahuan dan keterampilan', 'Mengikuti hanya jika disuruh atasan', 'Menolak karena takut materi yang diajarkan sulit', 'c'),
+
+(8, 'Anda mengetahui informasi penting yang harus diketahui seluruh anggota tim. Sikap Anda adalah...', 'Menyampaikan segera kepada semua anggota tim', 'Menyampaikan hanya kepada orang yang dianggap perlu saja', 'Menyimpan sendiri sampai ada yang menanyakan', 'Menyampaikan secara bertahap agar tidak terburu-buru', 'Menyampaikan hanya jika ada waktu luang', 'a'),
+
+(8, 'Anda harus bekerja sama dengan rekan yang memiliki sifat dan cara kerja sangat berbeda dari Anda. Sikap Anda adalah...', 'Menghindari kerjasama dan mencari alasan lain', 'Tetap bekerja sama, menghargai perbedaan, dan fokus pada tujuan bersama', 'Bekerja sama tapi hanya sebatas yang diperlukan', 'Membicarakan keburukannya ke rekan lain', 'Meminta dipindahkan ke tim lain', 'b'),
+
+(8, 'Pekerjaan yang Anda kerjakan mengalami kegagalan dan mempengaruhi hasil tim. Sikap Anda adalah...', 'Menyalahkan keadaan atau faktor lain di luar kendali', 'Mengakui tanggung jawab, mencari penyebabnya, dan berusaha memperbaiki di kesempatan berikutnya', 'Diam saja dan berharap tidak ada yang menanyakan', 'Merasa sedih berkepanjangan sampai mengganggu pekerjaan lain', 'Menganggap itu sebagai takdir yang tidak bisa diubah', 'b'),
+
+(8, 'Anda diberi kepercayaan untuk memimpin kelompok. Sikap Anda adalah...', 'Mengerjakan semuanya sendiri agar hasilnya lebih cepat dan sesuai keinginan', 'Membagi tugas sesuai kemampuan masing-masing anggota dan mengawasi jalannya pekerjaan', 'Menyuruh anggota mengerjakan semua tugas tanpa arahan', 'Membiarkan anggota bekerja sendiri tanpa koordinasi', 'Memilih hanya anggota yang dekat dengan Anda untuk diajak bekerja', 'b'),
+
+(8, 'Rekan kerja meminta pendapat Anda mengenai cara menyelesaikan tugasnya. Sikap Anda adalah...', 'Menjawab sekenanya saja agar tidak ribet', 'Mendengarkan masalahnya, memberikan saran yang logis, dan mendukung sebisa mungkin', 'Menyarankan untuk bertanya langsung ke atasan', 'Mengatakan tidak tahu apa-apa', 'Menyuruhnya mencari contoh pekerjaan orang lain', 'b'),
+
+(8, 'Anda melihat ada prosedur kerja yang sudah usang dan bisa diperbaiki agar lebih efisien. Sikap Anda adalah...', 'Tetap mengikuti prosedur yang ada saja', 'Mencatat kekurangannya, menyusun usulan perbaikan, lalu menyampaikannya ke atasan dengan sopan', 'Mengubahnya sendiri tanpa sepengetahuan atasan', 'Membicarakan kekurangannya saja tanpa memberikan solusi', 'Menganggap itu bukan urusan Anda', 'b'),
+
+(8, 'Saat bekerja, Anda menemukan kendala yang menghambat penyelesaian tugas. Sikap Anda adalah...', 'Berhenti bekerja dan menunggu sampai kendala itu hilang sendiri', 'Mencari cara mengatasinya atau melaporkan segera agar tidak menunda pekerjaan', 'Mengeluh terus-menerus kepada rekan kerja', 'Menyalahkan pihak yang dianggap menyebabkan kendala', 'Menyelesaikan dengan cara sendiri meski tidak sesuai aturan', 'b'),
+
+(8, 'Anda diberi tugas yang belum pernah Anda kerjakan sebelumnya. Sikap Anda adalah...', 'Menolak karena takut membuat kesalahan', 'Menerima, mencari informasi yang dibutuhkan, dan mempelajari cara mengerjakannya dengan sungguh-sungguh', 'Menerima tapi mengerjakan seadanya saja', 'Menerima dan meminta orang lain mengerjakannya untuk Anda', 'Menerima tapi terus bertanya hal yang sama berulang kali', 'b'),
+
+(8, 'Ada kesalahpahaman antara Anda dan rekan kerja. Sikap Anda adalah...', 'Mendiamkannya sampai rekan itu yang meminta maaf lebih dulu', 'Mengajak bicara secara pribadi untuk menyelesaikan masalah dengan kepala dingin', 'Membalas dengan sikap yang sama dinginnya', 'Menceritakan masalah itu ke rekan lain agar didukung', 'Melaporkan langsung ke atasan tanpa bicara dulu', 'b'),
+
+(8, 'Anda mendapatkan pujian atas hasil kerja yang baik. Sikap Anda adalah...', 'Merasa paling hebat dan membanggakan diri ke semua orang', 'Mengucapkan terima kasih, tetap rendah hati, dan berusaha mempertahankan kinerja tersebut', 'Menganggap itu hal yang biasa saja dan tidak perlu ditanggapi', 'Meminta pujian lebih banyak lagi', 'Mengatakan bahwa hasil itu bisa lebih baik lagi', 'b'),
+
+(8, 'Dalam tim kerja, ada anggota yang kurang aktif dan tidak mau berkontribusi. Sikap Anda adalah...', 'Membiarkannya saja dan mengerjakan tugasnya sendiri', 'Mendekatinya, mengajak berpartisipasi, dan memberikan tugas yang sesuai dengan kemampuannya', 'Membicarakan kelemahannya ke anggota tim lain', 'Melaporkan ke atasan tanpa memberi kesempatan', 'Mengabaikan keberadaannya sepenuhnya', 'b'),
+
+(8, 'Anda diminta membantu pekerjaan rekan kerja padahal Anda juga sedang sibuk. Sikap Anda adalah...', 'Menolak dengan tegas tanpa alasan', 'Mengatur jadwal terlebih dahulu, membantu sebisa mungkin setelah tugas utama Anda aman', 'Membantu tapi sambil terus mengeluh', 'Membantu tapi asal mengerjakannya saja', 'Menyuruhnya mencari bantuan ke orang lain', 'b'),
+
+(8, 'Atasan menilai hasil kerja Anda kurang memuaskan padahal menurut Anda sudah cukup baik. Sikap Anda adalah...', 'Membela diri dan menyangkal semua penilaiannya', 'Mendengarkan penjelasannya, memahami kekurangannya, dan berusaha memperbaiki di kesempatan berikutnya', 'Menganggap atasan tidak adil dan memihak orang lain', 'Berhenti bekerja sebaik dulu karena merasa tidak dihargai', 'Menyampaikan ketidakpuasan Anda ke rekan lain', 'b'),
+
+(8, 'Anda melihat ada rekan kerja yang melakukan pelanggaran aturan kantor yang cukup ringan. Sikap Anda adalah...', 'Mengingatkan dengan cara yang baik agar tidak terulang lagi', 'Membiarkannya saja karena tidak mengganggu Anda', 'Langsung melaporkan ke atasan tanpa bicara dulu', 'Membicarakan hal itu ke banyak orang', 'Menegur dengan nada tinggi dan kasar', 'a'),
+
+(8, 'Dalam menyelesaikan pekerjaan, Anda lebih menyukai cara yang...', 'Cepat meski ada risiko kesalahan', 'Tertata, sistematis, dan meminimalkan kesalahan', 'Mudah dan tidak membutuhkan banyak tenaga', 'Bebas tanpa aturan yang mengikat', 'Mengikuti kebiasaan orang lain saja', 'b'),
+
+(8, 'Anda diminta memberikan masukan untuk perbaikan kinerja tim. Sikap Anda adalah...', 'Diam saja karena takut menyinggung orang lain', 'Menyampaikan masukan secara jujur, objektif, dan disertai alasan yang membangun', 'Hanya menyampaikan hal-hal yang baik saja', 'Menyampaikan kekurangan saja tanpa solusi', 'Mengatakan semuanya sudah baik-baik saja', 'b'),
+
+(8, 'Saat bekerja dalam tim, Anda merasa pendapat Anda lebih baik dari pendapat orang lain. Sikap Anda adalah...', 'Memaksakan pendapat Anda agar diterima', 'Menyampaikan pendapat Anda dengan sopan, mendengarkan pendapat lain, lalu mencari kesepakatan terbaik', 'Diam saja dan membiarkan keputusan diambil orang lain', 'Menyindir pendapat orang lain yang dianggap kurang tepat', 'Keluar dari diskusi jika tidak diikuti', 'b'),
+
+(8, 'Anda diberi tugas dengan batas waktu yang sangat singkat. Sikap Anda adalah...', 'Mengeluh dan menyatakan bahwa tugas itu mustahil diselesaikan', 'Menyusun rencana kerja, membagi waktu, dan berusaha menyelesaikannya sebaik mungkin sesuai waktu yang ada', 'Menerima tapi mengerjakan setengahnya saja', 'Meminta orang lain mengerjakan sebagian tugas Anda', 'Menunda-nunda sampai waktu hampir habis', 'b'),
+
+(8, 'Jika ada kesalahan yang terjadi dalam pekerjaan tim dan Anda ikut bertanggung jawab, sikap Anda adalah...', 'Menyalahkan anggota lain yang dianggap lebih salah', 'Mengakui kesalahan bersama dan membantu mencari solusi perbaikannya', 'Membela diri agar tidak dipersalahkan', 'Membiarkan ketua tim yang bertanggung jawab sepenuhnya', 'Mengalihkan pembicaraan ke hal lain', 'b'),
+
+(8, 'Anda melihat ada kesalahan kecil dalam laporan yang dibuat rekan kerja. Sikap Anda adalah...', 'Menyampaikan dengan halus agar dia bisa memperbaikinya', 'Membiarkannya saja karena itu urusannya sendiri', 'Memperbaikinya sendiri tanpa memberi tahu dia', 'Membicarakan kesalahan itu ke rekan kerja lain', 'Menunggu sampai dia menyadari sendiri', 'a'),
+
+(8, 'Saat bekerja dengan rekan yang cara kerjanya lebih lambat dari Anda. Sikap Anda adalah...', 'Menyuruhnya bekerja lebih cepat dengan nada tegas', 'Membantu dan mengajari cara yang lebih efisien agar pekerjaan selesai tepat waktu', 'Mengerjakan bagian tugasnya sendiri saja', 'Mengeluh kepada atasan agar dia diganti', 'Menjauh agar tidak terhambat pekerjaannya', 'b'),
+
+(8, 'Anda menerima tugas yang dianggap sulit dan berat oleh rekan kerja lain. Sikap Anda adalah...', 'Menolak karena takut tidak sanggup menyelesaikannya', 'Menerima dengan penuh tanggung jawab dan berusaha menyelesaikannya sebaik mungkin', 'Menerima tapi meminta bantuan terus-menerus', 'Menerima tapi mengerjakan hanya sebagian saja', 'Menerima tapi meminta imbalan tambahan', 'b'),
+
+(8, 'Jika pekerjaan Anda terhambat karena masalah di luar kendali Anda. Sikap Anda adalah...', 'Segera melaporkan ke atasan dan menyampaikan usulan solusi', 'Menunggu sampai masalah itu selesai dengan sendirinya', 'Mengeluh dan menyalahkan keadaan', 'Membiarkan pekerjaan tertunda tanpa kabar', 'Mencari cara sendiri meski melanggar aturan', 'a'),
+
+(8, 'Dalam rapat kerja, Anda diberi kesempatan untuk menyampaikan pendapat. Sikap Anda adalah...', 'Berbicara sepanjang mungkin agar didengar semua orang', 'Menyampaikan pendapat secara singkat, jelas, dan berhubungan dengan topik', 'Diam saja dan tidak berani bicara', 'Hanya menyampaikan pendapat jika disetujui teman dekat', 'Menyampaikan hal yang sama seperti orang lain agar aman', 'b'),
+
+(8, 'Anda melihat ada rekan kerja yang mendapatkan beban tugas lebih banyak dari biasanya. Sikap Anda adalah...', 'Membantu sebisa mungkin jika tugas Anda sudah selesai', 'Membiarkannya saja karena itu urusan dia', 'Mengatakan bahwa itu tidak adil ke atasan', 'Menyuruhnya mengeluh saja', 'Menganggap itu sudah menjadi haknya', 'a'),
+
+(8, 'Anda diminta menjadi pengganti sementara untuk tugas yang belum pernah Anda jalani. Sikap Anda adalah...', 'Menerima dan berusaha mempelajari serta melaksanakannya dengan baik', 'Menolak karena merasa tidak mampu', 'Menerima tapi mengerjakan seadanya saja', 'Menerima tapi meminta orang lain mengawasi terus', 'Menerima tapi terus mengeluh kesulitannya', 'a'),
+
+(8, 'Jika hasil kerja Anda dibandingkan dengan rekan lain yang lebih baik dari Anda. Sikap Anda adalah...', 'Merasa iri dan berusaha menjatuhkan nama baiknya', 'Menjadikan itu motivasi untuk meningkatkan kualitas kerja Anda sendiri', 'Merasa rendah diri dan kehilangan semangat kerja', 'Menganggap dia lebih beruntung saja', 'Membandingkan kelebihan diri Anda yang lain', 'b'),
+
+(8, 'Anda harus bekerja di luar jam kerja karena ada tugas mendesak. Sikap Anda adalah...', 'Menerima dan menyelesaikannya dengan tanggung jawab', 'Menolak karena itu waktu istirahat Anda', 'Menerima tapi mengerjakan dengan lambat', 'Menerima tapi terus mengeluh lelah', 'Menerima tapi meminta bayaran tambahan secara paksa', 'a'),
+
+(8, 'Dalam menyelesaikan tugas, Anda selalu berusaha...', 'Menyelesaikan tepat waktu dan sesuai standar yang ditetapkan', 'Menyelesaikan secepat mungkin meski kurang teliti', 'Menyelesaikan mendekati batas waktu saja', 'Menyelesaikan hanya jika diawasi', 'Menyelesaikan seminimal mungkin agar cepat selesai', 'a'),
+
+(8, 'Anda melihat ada kebijakan baru yang menurut Anda kurang tepat. Sikap Anda adalah...', 'Menyampaikan pendapat dan usulan perbaikan secara sopan dan tertulis', 'Membicarakan kekurangannya ke rekan kerja saja', 'Menolak mengikuti kebijakan itu', 'Mengikuti saja tanpa mempedulikan isinya', 'Menyalahkan pembuat kebijakan tersebut', 'a'),
+
+(8, 'Jika ada kesempatan untuk mengembangkan keterampilan kerja, Anda akan...', 'Mengikuti dengan antusias untuk meningkatkan kinerja', 'Mengikuti jika tidak mengganggu waktu pribadi', 'Tidak tertarik karena merasa sudah cukup', 'Mengikuti hanya jika disuruh atasan', 'Mengikuti tapi tidak serius', 'a'),
+
+(8, 'Saat ada kesalahpahaman dalam tim, Anda akan...', 'Mengajak berdiskusi untuk menyelesaikannya dengan kepala dingin', 'Mendiamkan saja sampai rekan lain yang menyelesaikannya', 'Membela diri sendiri saja', 'Mengadu ke atasan agar diputuskan', 'Membiarkan berlarut-larut', 'a'),
+
+(8, 'Anda melihat ada rekan kerja yang membutuhkan bantuan namun tidak meminta. Sikap Anda adalah...', 'Mendekati dan menawarkan bantuan dengan sopan', 'Membiarkannya saja sampai dia meminta sendiri', 'Menganggap dia mampu mengerjakannya sendiri', 'Menyuruhnya meminta bantuan jika butuh', 'Memperhatikan saja tanpa bertindak', 'a'),
+
+(8, 'Dalam bekerja, prinsip yang paling Anda pegang adalah...', 'Hasil kerja yang baik dan bermanfaat bagi banyak pihak', 'Menyelesaikan tugas dengan cepat tanpa kesulitan', 'Menghindari pekerjaan yang terlalu berat', 'Bekerja sesuai keinginan sendiri', 'Mendapatkan pujian sebanyak-banyaknya', 'a'),
+
+(8, 'Jika Anda membuat kesalahan yang mengganggu kinerja tim. Sikap Anda adalah...', 'Mengakui kesalahan, meminta maaf, dan berusaha memperbaikinya', 'Menyembunyikan agar tidak diketahui orang lain', 'Menyalahkan keadaan atau orang lain', 'Membiarkan saja semoga tidak ketahuan', 'Mengalihkan perhatian ke hal lain', 'a');
