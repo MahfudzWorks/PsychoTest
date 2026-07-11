@@ -75,8 +75,6 @@ if ($userTest['status'] == 'finished') {
    HITUNG NILAI
 ===================================== */
 
-$score = 0;
-
 $result = mysqli_query($conn, "
 
 SELECT
@@ -90,7 +88,7 @@ LEFT JOIN user_answers
 
 ON questions.id = user_answers.question_id
 
-AND user_answers.user_test_id = '$user_test_id'
+AND user_answers.user_test_id='$user_test_id'
 
 WHERE
 
@@ -98,12 +96,28 @@ questions.test_id='" . $userTest['test_id'] . "'
 
 ");
 
+$totalQuestion = mysqli_num_rows($result);
+
+$correct = 0;
+
 while ($row = mysqli_fetch_assoc($result)) {
 
-  if ($row['user_answer'] == $row['correct_answer']) {
+  if (
+    !empty($row['user_answer']) &&
+    $row['user_answer'] == $row['correct_answer']
+  ) {
 
-    $score++;
+    $correct++;
   }
+}
+
+$wrong = $totalQuestion - $correct;
+
+$score = 0;
+
+if ($totalQuestion > 0) {
+
+  $score = round(($correct / $totalQuestion) * 100);
 }
 
 /* =====================================
@@ -119,6 +133,10 @@ SET
 status='finished',
 
 score='$score',
+
+correct_answers='$correct',
+
+wrong_answers='$wrong',
 
 remaining_time='0',
 

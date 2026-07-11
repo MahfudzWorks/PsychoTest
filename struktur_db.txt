@@ -58,7 +58,10 @@ start_time
 end_time
 
 status
+
 score
+correct_answers
+wrong_answers
 
 remaining_time
 
