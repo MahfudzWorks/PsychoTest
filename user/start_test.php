@@ -72,7 +72,7 @@ if (mysqli_num_rows($check) > 0) {
        MASIH MENGERJAKAN
     =========================== */
 
-  if ($userTest['status'] == 'in_progress') {
+  if ($userTest['status'] == 'started') {
 
     header("Location: test.php?user_test_id=" . $userTest['id']);
     exit;
@@ -115,7 +115,7 @@ VALUES(
 '$user_id',
 '$test_id',
 NOW(),
-'in_progress',
+'started',
 0,
 '$duration',
 'pending',

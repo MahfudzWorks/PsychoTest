@@ -79,7 +79,7 @@ $data = mysqli_fetch_assoc($check);
    HANYA UPDATE JIKA MASIH BERLANGSUNG
 ===================================== */
 
-if ($data['status'] != 'in_progress') {
+if ($data['status'] != 'started') {
 
   exit("Finished");
 }

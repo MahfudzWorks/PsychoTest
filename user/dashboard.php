@@ -244,7 +244,7 @@ DAFTAR TES
                   </span>
 
 
-                <?php elseif ($test['test_status'] == "in_progress"): ?>
+                <?php elseif ($test['test_status'] == "started"): ?>
 
                   <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
 
@@ -368,7 +368,7 @@ DAFTAR TES
 
 
 
-              <?php elseif ($test['test_status'] == "in_progress"): ?>
+              <?php elseif ($test['test_status'] == "started"): ?>
 
 
                 <!-- LANJUT TES -->

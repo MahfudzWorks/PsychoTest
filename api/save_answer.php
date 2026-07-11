@@ -85,7 +85,7 @@ $userTest = mysqli_fetch_assoc($check);
    CEK STATUS
 ===================================== */
 
-if ($userTest['status'] != 'in_progress') {
+if ($userTest['status'] != 'started') {
 
   http_response_code(400);
   exit("Test Finished");
@@ -116,50 +116,58 @@ if (mysqli_num_rows($exist) > 0) {
        UPDATE
     =========================== */
 
-  mysqli_query($conn, "
+  $query = mysqli_query($conn, "
 
-    UPDATE user_answers
+  UPDATE user_answers
 
-    SET
+  SET answer='$answer'
 
-    answer='$answer'
+  WHERE
 
-    WHERE
+  user_test_id='$user_test_id'
 
-    user_test_id='$user_test_id'
+  AND
 
-    AND
+  question_id='$question_id'
 
-    question_id='$question_id'
+  ");
 
-    ");
+  if (!$query) {
+
+    die(mysqli_error($conn));
+  }
 } else {
 
   /* ===========================
        INSERT
     =========================== */
 
-  mysqli_query($conn, "
+  $query = mysqli_query($conn, "
 
-    INSERT INTO user_answers(
+  INSERT INTO user_answers(
 
-        user_test_id,
-        question_id,
-        answer,
-        created_at
+      user_test_id,
+      question_id,
+      answer,
+      created_at
 
-    )
+  )
 
-    VALUES(
+  VALUES(
 
-        '$user_test_id',
-        '$question_id',
-        '$answer',
-        NOW()
+      '$user_test_id',
+      '$question_id',
+      '$answer',
+      NOW()
 
-    )
+  )
 
-    ");
+  ");
+
+  if (!$query) {
+
+    die(mysqli_error($conn));
+  }
 }
 
 /* =====================================
