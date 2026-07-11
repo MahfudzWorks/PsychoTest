@@ -33,6 +33,7 @@ PsychoTest/
 │   ├── finish_test.php        # Akhiri tes
 │   ├── get_progress.php       # Progress pengerjaan
 │   ├── timer.php              # Sinkronisasi timer
+│   ├── upload_payment.php
 │
 ├── assets/
 │   ├── css/

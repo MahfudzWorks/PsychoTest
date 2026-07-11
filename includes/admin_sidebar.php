@@ -1,169 +1,136 @@
 <?php
-$currentPage = basename($_SERVER['PHP_SELF']);
+// Ambil jalur relatif dari folder admin
+$currentPath = $_SERVER['PHP_SELF'];
+$basePath = '/admin/';
+$relativePath = '';
 
-function isActive($page)
+// Ambil bagian setelah /admin/
+if (strpos($currentPath, $basePath) !== false) {
+  $relativePath = substr($currentPath, strpos($currentPath, $basePath) + strlen($basePath));
+}
+
+// Fungsi cek menu aktif: menyala untuk satu folder penuh
+function isActive($folder)
 {
-  global $currentPage;
-  return $currentPage == $page
-    ? "bg-blue-600 text-white shadow-lg"
-    : "text-gray-300 hover:bg-gray-700 hover:text-white";
+  global $relativePath;
+  if ($folder === 'dashboard.php') {
+    return $relativePath === 'dashboard.php'
+      ? "bg-primary text-white shadow-md"
+      : "text-gray-300 hover:bg-gray-800 hover:text-white";
+  }
+  // Menyala jika di dalam folder tersebut
+  return str_starts_with($relativePath, $folder . '/')
+    ? "bg-primary text-white shadow-md"
+    : "text-gray-300 hover:bg-gray-800 hover:text-white";
 }
 ?>
 
 <!-- Sidebar -->
-<aside class="fixed top-0 left-0 w-64 h-screen bg-gray-900 text-white shadow-xl z-50">
+<aside class="fixed top-0 left-0 w-64 h-screen bg-gray-900 text-white shadow-xl z-50 flex flex-col">
 
-  <!-- Logo -->
-  <div class="h-16 flex items-center justify-center border-b border-gray-700">
-
-    <a href="dashboard.php" class="flex items-center gap-3">
-
-      <div class="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center">
-
-        <i class="fa-solid fa-brain text-xl"></i>
-
+  <!-- Logo & Judul -->
+  <div class="h-16 flex items-center justify-center border-b border-gray-800/50 bg-gray-900">
+    <!-- Jalur dari akar proyek, aman di semua posisi -->
+    <a href="/PsychoTest/admin/dashboard.php" class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-md">
+        <i class="fa-solid fa-brain text-lg"></i>
       </div>
-
       <div>
-
-        <h2 class="font-bold text-lg">
-          PsychoTest
-        </h2>
-
-        <small class="text-gray-400">
-          Admin Panel
-        </small>
-
+        <h2 class="font-bold text-base">PsychoTest</h2>
+        <p class="text-xs text-gray-400">Panel Admin</p>
       </div>
-
     </a>
-
   </div>
 
-  <!-- Menu -->
-  <div class="py-6 overflow-y-auto h-[calc(100vh-64px)]">
-
-    <p class="text-xs text-gray-500 uppercase px-6 mb-3 tracking-widest">
-      Main Menu
+  <!-- Daftar Menu -->
+  <div class="py-6 px-3 overflow-y-auto sidebar-scroll flex-1">
+    <p class="text-xs text-gray-500 uppercase tracking-wider px-3 mb-2 font-medium">
+      Menu Utama
     </p>
 
-    <ul class="space-y-2 px-4">
-
+    <ul class="space-y-1.5">
       <li>
-        <a href="dashboard.php"
-          class="flex items-center gap-3 px-4 py-3 rounded-lg transition <?= isActive('dashboard.php') ?>">
-
+        <a
+          href="/PsychoTest/admin/dashboard.php"
+          class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 <?= isActive('dashboard.php') ?>">
           <i class="fa-solid fa-chart-line w-5 text-center"></i>
-
-          Dashboard
-
+          <span>Dashboard</span>
         </a>
       </li>
-
       <li>
-        <a href="users.php"
-          class="flex items-center gap-3 px-4 py-3 rounded-lg transition <?= isActive('users.php') ?>">
-
+        <a
+          href="/PsychoTest/admin/users/users.php"
+          class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 <?= isActive('users') ?>">
           <i class="fa-solid fa-users w-5 text-center"></i>
-
-          Kelola Peserta
-
+          <span>Kelola Peserta</span>
         </a>
       </li>
-
       <li>
-        <a href="tests.php"
-          class="flex items-center gap-3 px-4 py-3 rounded-lg transition <?= isActive('tests.php') ?>">
-
+        <a
+          href="/PsychoTest/admin/tests/tests.php"
+          class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 <?= isActive('tests') ?>">
           <i class="fa-solid fa-file-circle-check w-5 text-center"></i>
-
-          Jenis Tes
-
+          <span>Jenis Tes</span>
         </a>
       </li>
-
       <li>
-        <a href="questions.php"
-          class="flex items-center gap-3 px-4 py-3 rounded-lg transition <?= isActive('questions.php') ?>">
-
+        <a
+          href="/PsychoTest/admin/questions/questions.php"
+          class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 <?= isActive('questions') ?>">
           <i class="fa-solid fa-circle-question w-5 text-center"></i>
-
-          Bank Soal
-
+          <span>Bank Soal</span>
         </a>
       </li>
-
       <li>
-        <a href="payments.php"
-          class="flex items-center gap-3 px-4 py-3 rounded-lg transition <?= isActive('payments.php') ?>">
-
+        <a
+          href="/PsychoTest/admin/payments/payments.php"
+          class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 <?= isActive('payments') ?>">
           <i class="fa-solid fa-credit-card w-5 text-center"></i>
-
-          Pembayaran
-
+          <span>Pembayaran</span>
         </a>
       </li>
-
       <li>
-        <a href="results.php"
-          class="flex items-center gap-3 px-4 py-3 rounded-lg transition <?= isActive('results.php') ?>">
-
+        <a
+          href="/PsychoTest/admin/results/results.php"
+          class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 <?= isActive('results') ?>">
           <i class="fa-solid fa-square-poll-vertical w-5 text-center"></i>
-
-          Hasil Tes
-
+          <span>Hasil Tes</span>
         </a>
       </li>
-
       <li>
-        <a href="reports.php"
-          class="flex items-center gap-3 px-4 py-3 rounded-lg transition <?= isActive('reports.php') ?>">
-
+        <a
+          href="/PsychoTest/admin/reports/reports.php"
+          class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 <?= isActive('reports') ?>">
           <i class="fa-solid fa-file-lines w-5 text-center"></i>
-
-          Laporan
-
+          <span>Laporan</span>
         </a>
       </li>
-
     </ul>
 
-    <div class="border-t border-gray-700 mt-8 pt-6">
-
-      <p class="text-xs text-gray-500 uppercase px-6 mb-3 tracking-widest">
-        Account
+    <!-- Bagian Akun -->
+    <div class="border-t border-gray-800/50 mt-8 pt-6">
+      <p class="text-xs text-gray-500 uppercase tracking-wider px-3 mb-2 font-medium">
+        Akun
       </p>
-
-      <ul class="space-y-2 px-4">
-
+      <ul class="space-y-1.5">
         <li>
-          <a href="profile.php"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg transition <?= isActive('profile.php') ?>">
-
+          <a
+            href="/PsychoTest/admin/profile.php"
+            class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 <?= isActive('profile.php') ?>">
             <i class="fa-solid fa-user w-5 text-center"></i>
-
-            Profil
-
+            <span>Profil</span>
           </a>
         </li>
-
         <li>
-
-          <a href="../auth/logout.php"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-600 hover:text-white transition">
-
+          <a
+            href="/PsychoTest/auth/logout.php"
+            class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-red-400 hover:bg-red-600/10 hover:text-red-500 transition-all duration-200">
             <i class="fa-solid fa-right-from-bracket w-5 text-center"></i>
-
-            Logout
-
+            <span>Keluar</span>
           </a>
-
         </li>
-
       </ul>
-
     </div>
-
   </div>
 
 </aside>

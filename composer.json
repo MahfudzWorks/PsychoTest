@@ -1,0 +1,13 @@
+{
+    "name": "hp/psycho-test",
+    "authors": [
+        {
+            "name": "Mahfudz Alfanani Syaviqi",
+            "email": "mahfudzworksss@gmail.com"
+        }
+    ],
+    "require": {
+        "phpoffice/phpspreadsheet": "^5.8",
+        "dompdf/dompdf": "^3.1"
+    }
+}
