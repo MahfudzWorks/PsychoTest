@@ -45,7 +45,7 @@ $userTest = mysqli_fetch_assoc($query);
 /* =====================================
    STATUS
 ===================================== */
-if ($userTest['status'] == 'finished') {
+if ($userTest['status'] == 'completed') {
   header("Location: finish.php?id=" . $user_test_id);
   exit;
 }

@@ -14,10 +14,10 @@
 
       <!-- Menu Desktop -->
       <div class="hidden md:flex items-center gap-8">
-        <a href="/index.php" class="text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors">Home</a>
-        <a href="/about.php" class="text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors">About</a>
-        <a href="/kontak.php" class="text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors">Kontak</a>
-        <a href="/auth/login.php" class="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold shadow-sm transition-all">
+        <a href="/PsychoTest/index.php" class="text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors">Home</a>
+        <a href="/PsychoTest/about.php" class="text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors">About</a>
+        <a href="/PsychoTest/kontak.php" class="text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors">Kontak</a>
+        <a href="/PsychoTest/auth/login.php" class="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold shadow-sm transition-all">
           Masuk <i class="fa-solid fa-right-to-bracket text-xs ml-1.5"></i>
         </a>
       </div>
@@ -35,11 +35,11 @@
   <!-- Menu Mobile -->
   <div id="mobile-menu" class="hidden md:hidden border-t border-slate-100 bg-white/95 backdrop-blur-md transition-all absolute w-full left-0 shadow-lg">
     <div class="px-4 pt-3 pb-6 space-y-3">
-      <a href="/index.php" class="block px-4 py-2.5 rounded-xl text-base font-medium text-slate-600 hover:bg-slate-50 hover:text-indigo-600 transition-colors">Home</a>
-      <a href="/about.php" class="block px-4 py-2.5 rounded-xl text-base font-medium text-slate-600 hover:bg-slate-50 hover:text-indigo-600 transition-colors">About</a>
-      <a href="/kontak.php" class="block px-4 py-2.5 rounded-xl text-base font-medium text-slate-600 hover:bg-slate-50 hover:text-indigo-600 transition-colors">Kontak</a>
+      <a href="/PsychoTest/index.php" class="block px-4 py-2.5 rounded-xl text-base font-medium text-slate-600 hover:bg-slate-50 hover:text-indigo-600 transition-colors">Home</a>
+      <a href="/PsychoTest/about.php" class="block px-4 py-2.5 rounded-xl text-base font-medium text-slate-600 hover:bg-slate-50 hover:text-indigo-600 transition-colors">About</a>
+      <a href="/PsychoTest/kontak.php" class="block px-4 py-2.5 rounded-xl text-base font-medium text-slate-600 hover:bg-slate-50 hover:text-indigo-600 transition-colors">Kontak</a>
       <div class="pt-2 px-4">
-        <a href="/auth/login.php" class="w-full text-center inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-xl text-base font-semibold transition-colors shadow-sm">
+        <a href="/PsychoTest/auth/login.php" class="w-full text-center inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-xl text-base font-semibold transition-colors shadow-sm">
           Masuk <i class="fa-solid fa-right-to-bracket text-xs ml-1.5"></i>
         </a>
       </div>
