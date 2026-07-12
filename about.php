@@ -31,7 +31,7 @@
       <div class="relative group" data-aos="fade-right">
         <div class="absolute -inset-2 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-3xl opacity-10 blur-xl group-hover:opacity-20 transition duration-500"></div>
         <div class="relative border border-slate-100 rounded-2xl overflow-hidden shadow-2xl bg-white p-2">
-          <img src="assets/images/about.png" alt="Tentang PsychoTest" class="rounded-xl w-full h-auto object-cover transform group-hover:scale-[1.01] transition duration-500">
+          <img src="assets/images/bookPsy.jpg" alt="Tentang PsychoTest" class="rounded-xl w-full h-auto object-cover transform group-hover:scale-[1.01] transition duration-500">
         </div>
       </div>
 

@@ -30,7 +30,7 @@ require "config/database.php";
           Ukur potensi, kecerdasan, dan kepribadian Anda secara akurat dengan sistem tes online yang cepat, aman, dan terpercaya. Mendukung penuh kebutuhan individu maupun rekrutmen perusahaan.
         </p>
         <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-          <a href="auth/daftar.php" class="inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-4 rounded-xl font-bold shadow-lg shadow-indigo-600/30 transition-all duration-200 transform hover:-translate-y-0.5">
+          <a href="auth/login.php" class="inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-4 rounded-xl font-bold shadow-lg shadow-indigo-600/30 transition-all duration-200 transform hover:-translate-y-0.5">
             Mulai Tes Sekarang <i class="fa-solid fa-arrow-right text-xs"></i>
           </a>
           <a href="#daftar-tes" class="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-4 rounded-xl font-bold backdrop-blur-sm transition-all duration-200">
@@ -130,7 +130,7 @@ require "config/database.php";
               </div>
             </div>
             <div class="bg-slate-50 px-6 py-3 border-t border-slate-100">
-              <a href="auth/daftar.php" class="block text-center text-indigo-600 font-semibold hover:text-indigo-700 transition-colors">
+              <a href="auth/login.php" class="block text-center text-indigo-600 font-semibold hover:text-indigo-700 transition-colors">
                 Mulai Tes <i class="fa-solid fa-arrow-right ml-1"></i>
               </a>
             </div>
@@ -228,7 +228,7 @@ require "config/database.php";
       </div>
 
       <div class="text-center group" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
-        <div class="w-14 h-14 rounded-full bg-slate-50 border-2 border-indigo-600 bg-indigo-600 flex items-center justify-center text-white font-bold text-lg mx-auto transition-all duration-300">
+        <div class="w-14 h-14 rounded-full bg-slate-50 border-2 border-slate-200 group-hover:border-indigo-600 group-hover:bg-indigo-50 flex items-center justify-center text-slate-700 group-hover:text-indigo-600 font-bold text-lg mx-auto transition-all duration-300">
           04
         </div>
         <h4 class="font-bold text-slate-900 mt-4 text-base">Lihat Hasil Tes</h4>
@@ -249,7 +249,7 @@ require "config/database.php";
       Bergabunglah dengan ribuan pengguna lainnya dan dapatkan wawasan mendalam mengenai kepribadian serta kemampuan Anda.
     </p>
     <div class="mt-8">
-      <a href="auth/daftar.php" class="inline-flex items-center justify-center bg-white hover:bg-slate-50 text-indigo-700 px-8 py-4 rounded-xl font-bold shadow-xl transition-all duration-200 transform hover:-translate-y-0.5">
+      <a href="auth/register.php" class="inline-flex items-center justify-center bg-white hover:bg-slate-50 text-indigo-700 px-8 py-4 rounded-xl font-bold shadow-xl transition-all duration-200 transform hover:-translate-y-0.5">
         Daftar Akun Sekarang
       </a>
     </div>
