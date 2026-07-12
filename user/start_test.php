@@ -1,136 +1,70 @@
 <?php
-
 session_start();
-
 require "../config/database.php";
 
-/* =====================================
-   LOGIN
-===================================== */
-
-if (!isset($_SESSION['login'])) {
+// 1. Validasi Login & Sesi ID
+if (!isset($_SESSION['login']) || empty($_SESSION['id'])) {
   header("Location: ../auth/login.php");
   exit;
 }
 
-/* =====================================
-   VALIDASI TEST ID
-===================================== */
-
-if (!isset($_GET['id'])) {
+// 2. Validasi Parameter ID Tes
+if (!isset($_GET['id']) || empty($_GET['id'])) {
   header("Location: dashboard.php");
   exit;
 }
 
-$user_id = (int) $_SESSION['id'];
-$test_id = (int) $_GET['id'];
+$user_id = (int)$_SESSION['id'];
+$test_id = (int)$_GET['id'];
 
-/* =====================================
-   CEK TEST
-===================================== */
+// 3. Cek validitas modul tes aktif
+$query_test = "SELECT * FROM tests WHERE id = ? AND status = 'active' LIMIT 1";
+$stmt_test = mysqli_prepare($conn, $query_test);
+mysqli_stmt_bind_param($stmt_test, "i", $test_id);
+mysqli_stmt_execute($stmt_test);
+$res_test = mysqli_stmt_get_result($stmt_test);
 
-$testQuery = mysqli_query($conn, "
-SELECT *
-FROM tests
-WHERE id='$test_id'
-AND status='active'
-");
-
-if (mysqli_num_rows($testQuery) == 0) {
-
-  echo "<script>
-
-    alert('Tes tidak ditemukan.');
-
-    window.location='dashboard.php';
-
-    </script>";
-
+if (mysqli_num_rows($res_test) === 0) {
+  echo "<script>alert('Tes tidak ditemukan atau sudah tidak aktif.'); window.location='dashboard.php';</script>";
   exit;
 }
+$test = mysqli_fetch_assoc($res_test);
 
-$test = mysqli_fetch_assoc($testQuery);
+// 4. Cek riwayat status pengerjaan user sebelumnya
+$query_check = "SELECT * FROM user_tests WHERE user_id = ? AND test_id = ? ORDER BY id DESC LIMIT 1";
+$stmt_check = mysqli_prepare($conn, $query_check);
+mysqli_stmt_bind_param($stmt_check, "ii", $user_id, $test_id);
+mysqli_stmt_execute($stmt_check);
+$res_check = mysqli_stmt_get_result($stmt_check);
 
-/* =====================================
-   CEK APAKAH SUDAH ADA
-===================================== */
+if (mysqli_num_rows($res_check) > 0) {
+  $userTest = mysqli_fetch_assoc($res_check);
 
-$check = mysqli_query($conn, "
-SELECT *
-FROM user_tests
-WHERE user_id='$user_id'
-AND test_id='$test_id'
-ORDER BY id DESC
-LIMIT 1
-");
-
-if (mysqli_num_rows($check) > 0) {
-
-  $userTest = mysqli_fetch_assoc($check);
-
-  /* ===========================
-       MASIH MENGERJAKAN
-    =========================== */
-
-  if ($userTest['status'] == 'started') {
-
+  // Jika sedang berjalan, teruskan kembali ke halaman ujian
+  if ($userTest['status'] === 'on_progress') {
     header("Location: test.php?user_test_id=" . $userTest['id']);
     exit;
   }
-
-  /* ===========================
-       SUDAH SELESAI
-    =========================== */
-
-  if ($userTest['status'] == 'finished') {
-
+  // Jika sudah selesai, alihkan ke halaman selesai/invoice
+  if ($userTest['status'] === 'completed') {
     header("Location: finish.php?id=" . $userTest['id']);
     exit;
   }
 }
 
-/* =====================================
-   INSERT USER TEST
-===================================== */
+// 5. Daftarkan sesi pengerjaan ujian baru
+$duration = (int)$test['duration'] * 60; // Konversi menit ke detik
 
-$duration = $test['duration'] * 60;
-
-mysqli_query($conn, "
-
-INSERT INTO user_tests(
-
-user_id,
-test_id,
-start_time,
-status,
-score,
-remaining_time,
-payment_status,
-created_at
-
-)
-
-VALUES(
-
-'$user_id',
-'$test_id',
-NOW(),
-'started',
-0,
-'$duration',
-'pending',
-NOW()
-
-)
-
-");
+$query_insert = "
+  INSERT INTO user_tests (user_id, test_id, start_time, status, score, remaining_time, payment_status, created_at) 
+  VALUES (?, ?, NOW(), 'on_progress', 0, ?, 'unpaid', NOW())
+";
+$stmt_insert = mysqli_prepare($conn, $query_insert);
+mysqli_stmt_bind_param($stmt_insert, "iii", $user_id, $test_id, $duration);
+mysqli_stmt_execute($stmt_insert);
 
 $user_test_id = mysqli_insert_id($conn);
 
-/* =====================================
-   REDIRECT TEST
-===================================== */
-
+// 6. Alihkan ke halaman lembar soal
 header("Location: test.php?user_test_id=" . $user_test_id);
-
 exit;
