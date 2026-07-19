@@ -47,25 +47,23 @@ if (mysqli_num_rows($query) == 0) {
 $data = mysqli_fetch_assoc($query);
 
 /* =====================================
-   VALIDASI FILE
+   VALIDASI STATUS PEMBAYARAN
 ===================================== */
 
-if (!isset($_FILES['payment_proof'])) {
+if ($data['payment_status'] == 'paid') {
 
   echo "<script>
-    alert('Silakan pilih file.');
-    history.back();
+        alert('Pembayaran sudah diverifikasi.');
+        window.location='../user/payment.php?id=$user_test_id';
     </script>";
   exit;
 }
 
-$file = $_FILES['payment_proof'];
-
-if ($file['error'] != 0) {
+if (!in_array($data['payment_status'], ['unpaid', 'rejected'])) {
 
   echo "<script>
-    alert('Gagal mengupload file.');
-    history.back();
+        alert('Status pembayaran tidak valid.');
+        window.location='../user/payment.php?id=$user_test_id';
     </script>";
   exit;
 }
@@ -118,7 +116,7 @@ if (!is_dir($folder)) {
 
 if (!empty($data['payment_proof'])) {
 
-  $oldFile = "../" . $data['payment_proof'];
+  $oldFile = "../" . ltrim($data['payment_proof'], "/");
 
   if (file_exists($oldFile)) {
     unlink($oldFile);
@@ -158,13 +156,34 @@ $filePath = "assets/uploads/payments/" . $newName;
 $update = mysqli_query($conn, "
 UPDATE user_tests
 SET
-
-payment_proof='$filePath',
-payment_date=NOW(),
-payment_status='pending'
-
-WHERE id='$user_test_id'
+    payment_proof = '$filePath',
+    payment_date = NOW(),
+    payment_status = 'pending'
+WHERE id = '$user_test_id'
 ");
+
+if ($update) {
+
+  mysqli_query($conn, "
+    INSERT INTO notifications(type,title,message,related_id)
+    VALUES(
+        'new_payment',
+        'Pembayaran Baru',
+        'Peserta mengunggah bukti pembayaran.',
+        '$user_test_id'
+    )");
+
+  echo "<script>
+        alert('Bukti pembayaran berhasil dikirim.');
+        window.location='../user/payment.php?id=$user_test_id';
+    </script>";
+} else {
+
+  echo "<script>
+        alert('Gagal menyimpan data.');
+        history.back();
+    </script>";
+}
 
 /* =====================================
    REDIRECT

@@ -66,9 +66,30 @@ if (mysqli_num_rows($query) == 0) {
 
 $userTest = mysqli_fetch_assoc($query);
 
-if ($userTest['status'] == 'finished') {
-
+if ($userTest['status'] != 'on_progress') {
   exit("success");
+}
+
+/* =====================================
+   CEK SEMUA SOAL SUDAH DIJAWAB
+===================================== */
+
+$totalQuestion = mysqli_fetch_assoc(mysqli_query($conn, "
+SELECT COUNT(*) AS total
+FROM questions
+WHERE test_id='" . $userTest['test_id'] . "'
+"))['total'];
+
+$totalAnswer = mysqli_fetch_assoc(mysqli_query($conn, "
+SELECT COUNT(*) AS total
+FROM user_answers
+WHERE user_test_id='$user_test_id'
+"))['total'];
+
+if ($totalAnswer < $totalQuestion) {
+
+  http_response_code(400);
+  exit("Masih ada soal yang belum dijawab.");
 }
 
 /* =====================================
@@ -130,7 +151,7 @@ UPDATE user_tests
 
 SET
 
-status='finished',
+status='completed',
 
 score='$score',
 

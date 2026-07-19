@@ -77,6 +77,10 @@ $listTest = mysqli_query($conn, "
 /* =====================================
    STATISTIK
 ===================================== */
+$totalUnpaid = mysqli_fetch_assoc(mysqli_query($conn, "
+  SELECT COUNT(*) AS total FROM user_tests WHERE payment_status = 'unpaid'
+"))['total'] ?? 0;
+
 $totalPending = mysqli_fetch_assoc(mysqli_query($conn, "
   SELECT COUNT(*) AS total FROM user_tests WHERE payment_status = 'pending'
 "))['total'] ?? 0;
@@ -101,7 +105,11 @@ $totalRejected = mysqli_fetch_assoc(mysqli_query($conn, "
   </div>
 
   <!-- Kartu Statistik -->
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+      <p class="text-gray-500 text-sm">Belum Bayar</p>
+      <h2 class="text-3xl font-bold text-gray-600 mt-2"><?= $totalUnpaid ?></h2>
+    </div>
     <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 p-6 border border-gray-100 card-animate">
       <p class="text-gray-500 text-sm">Menunggu Verifikasi</p>
       <h2 class="text-3xl font-bold text-yellow-500 mt-2"><?= $totalPending ?></h2>
@@ -136,6 +144,7 @@ $totalRejected = mysqli_fetch_assoc(mysqli_query($conn, "
       <select name="status"
         class="w-full border border-gray-200 rounded-lg px-4 py-2.5 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 outline-none transition-all duration-200">
         <option value="">Semua Status</option>
+        <option value="unpaid" <?= ($status == "unpaid") ? "selected" : "" ?>>Belum Bayar</option>
         <option value="pending" <?= ($status == "pending") ? "selected" : "" ?>>Menunggu</option>
         <option value="paid" <?= ($status == "paid") ? "selected" : "" ?>>Lunas</option>
         <option value="rejected" <?= ($status == "rejected") ? "selected" : "" ?>>Ditolak</option>
@@ -169,13 +178,21 @@ $totalRejected = mysqli_fetch_assoc(mysqli_query($conn, "
           <?php while ($row = mysqli_fetch_assoc($query)): ?>
             <?php
             switch ($row['payment_status']) {
-              case "paid":
-                $badge = "bg-green-100 text-green-700";
-                $statusText = "Lunas";
+              case "unpaid":
+                $badge = "bg-gray-100 text-gray-700";
+                $statusText = "Belum Bayar";
                 break;
               case "pending":
                 $badge = "bg-yellow-100 text-yellow-700";
                 $statusText = "Menunggu";
+                break;
+              case "paid":
+                $badge = "bg-green-100 text-green-700";
+                $statusText = "Lunas";
+                break;
+              case "rejected":
+                $badge = "bg-red-100 text-red-700";
+                $statusText = "Ditolak";
                 break;
               default:
                 $badge = "bg-red-100 text-red-700";

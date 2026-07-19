@@ -32,6 +32,22 @@ if (mysqli_num_rows($query) == 0) {
 
 $data = mysqli_fetch_assoc($query);
 
+/* =====================================
+   AUTO GRATIS
+===================================== */
+
+if ($data['price'] <= 0) {
+  mysqli_query($conn, "
+    UPDATE user_tests
+    SET
+    payment_status='paid',
+    payment_date=NOW()
+    WHERE id='$user_test_id'
+    ");
+  header("Location: result.php?id=" . $user_test_id);
+  exit;
+}
+
 if ($data['status'] !== 'completed') {
   echo "<script>
     alert('Anda belum menyelesaikan tes ini. Silakan selesaikan tes terlebih dahulu.');
@@ -45,6 +61,12 @@ if ($data['status'] !== 'completed') {
 ===================================== */
 $statusBadge = "";
 switch ($data['payment_status']) {
+  case 'unpaid':
+    $statusBadge = '<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 border border-gray-200">Belum Bayar</span>';
+    break;
+  case 'pending':
+    $statusBadge = '<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-yellow-50 text-yellow-700 border border-yellow-200">Menunggu Verifikasi</span>';
+    break;
   case 'paid':
     $statusBadge = '<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-50 text-green-700 border border-green-200">Lunas</span>';
     break;
@@ -52,7 +74,7 @@ switch ($data['payment_status']) {
     $statusBadge = '<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-50 text-red-700 border border-red-200">Ditolak</span>';
     break;
   default:
-    $statusBadge = '<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200">Menunggu Pembayaran</span>';
+    $statusBadge = '<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 border border-gray-200">Tidak diketahui</span>';
 }
 ?>
 <!DOCTYPE html>

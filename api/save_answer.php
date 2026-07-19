@@ -82,10 +82,38 @@ if (mysqli_num_rows($check) == 0) {
 $userTest = mysqli_fetch_assoc($check);
 
 /* =====================================
+   VALIDASI SOAL MILIK TES
+===================================== */
+
+$checkQuestion = mysqli_query($conn, "
+
+SELECT questions.id
+
+FROM questions
+
+JOIN user_tests
+ON user_tests.test_id = questions.test_id
+
+WHERE
+questions.id='$question_id'
+AND
+user_tests.id='$user_test_id'
+
+LIMIT 1
+
+");
+
+if (mysqli_num_rows($checkQuestion) == 0) {
+
+  http_response_code(400);
+  exit("Question Invalid");
+}
+
+/* =====================================
    CEK STATUS
 ===================================== */
 
-if ($userTest['status'] != 'started') {
+if ($userTest['status'] != 'on_progress') {
 
   http_response_code(400);
   exit("Test Finished");

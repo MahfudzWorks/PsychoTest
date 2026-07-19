@@ -2,16 +2,214 @@
 session_start();
 require "../config/database.php";
 
+/* =====================================
+   LOGIN
+===================================== */
+
 if (!isset($_SESSION['login'])) {
   header("Location: ../auth/login.php");
   exit;
 }
 
-$fullname = $_SESSION['fullname'];
+/* =====================================
+   VALIDASI ID
+===================================== */
 
-// sementara
+if (!isset($_GET['id'])) {
+  header("Location: dashboard.php");
+  exit;
+}
+
+$user_test_id = (int) $_GET['id'];
+$user_id      = (int) $_SESSION['id'];
+
+/* =====================================
+   AMBIL DATA USER TEST
+===================================== */
+
+$query = mysqli_query($conn, "
+SELECT
+    user_tests.*,
+    users.fullname,
+    tests.title,
+    tests.price
+FROM user_tests
+JOIN users
+ON users.id = user_tests.user_id
+JOIN tests
+ON tests.id = user_tests.test_id
+WHERE
+user_tests.id='$user_test_id'
+AND
+user_tests.user_id='$user_id'
+LIMIT 1
+");
+
+if (mysqli_num_rows($query) == 0) {
+
+  echo "
+    <script>
+    alert('Data tes tidak ditemukan.');
+    window.location='dashboard.php';
+    </script>
+    ";
+
+  exit;
+}
+
+$data = mysqli_fetch_assoc($query);
+
+/* =====================================
+   STATUS TES
+===================================== */
+
+if ($data['status'] != "completed") {
+
+  echo "
+    <script>
+    alert('Tes belum selesai.');
+    window.location='dashboard.php';
+    </script>
+    ";
+
+  exit;
+}
+
+/* =====================================
+   STATUS BADGE TES
+===================================== */
+
 $test_status = "Selesai";
-$payment_status = "Belum Dibayar";
+
+/* =====================================
+   STATUS PEMBAYARAN
+===================================== */
+
+switch ($data['payment_status']) {
+
+  case "unpaid":
+
+    $payment_status = "Belum Dibayar";
+
+    $paymentBadge =
+      '
+        <span class="inline-flex items-center gap-1.5 bg-rose-50 text-rose-700 px-3 py-1.5 rounded-xl text-xs font-semibold border border-rose-100">
+            <i class="fa-solid fa-circle-xmark text-[10px]"></i>
+            Belum Dibayar
+        </span>
+        ';
+
+    break;
+
+  case "pending":
+
+    $payment_status = "Menunggu Verifikasi";
+
+    $paymentBadge =
+      '
+        <span class="inline-flex items-center gap-1.5 bg-yellow-50 text-yellow-700 px-3 py-1.5 rounded-xl text-xs font-semibold border border-yellow-200">
+            <i class="fa-solid fa-clock text-[10px]"></i>
+            Menunggu
+        </span>
+        ';
+
+    break;
+
+  case "paid":
+
+    $payment_status = "Lunas";
+
+    $paymentBadge =
+      '
+        <span class="inline-flex items-center gap-1.5 bg-green-50 text-green-700 px-3 py-1.5 rounded-xl text-xs font-semibold border border-green-200">
+            <i class="fa-solid fa-circle-check text-[10px]"></i>
+            Lunas
+        </span>
+        ';
+
+    break;
+
+  case "rejected":
+
+    $payment_status = "Ditolak";
+
+    $paymentBadge =
+      '
+        <span class="inline-flex items-center gap-1.5 bg-red-50 text-red-700 px-3 py-1.5 rounded-xl text-xs font-semibold border border-red-200">
+            <i class="fa-solid fa-circle-xmark text-[10px]"></i>
+            Ditolak
+        </span>
+        ';
+
+    break;
+
+  default:
+
+    $payment_status = "Belum Dibayar";
+
+    $paymentBadge =
+      '
+        <span class="inline-flex items-center gap-1.5 bg-gray-100 text-gray-700 px-3 py-1.5 rounded-xl text-xs font-semibold border border-gray-200">
+            Unknown
+        </span>
+        ';
+
+    break;
+}
+
+/* =====================================
+   TOMBOL SESUAI STATUS
+===================================== */
+
+$actionButton = "";
+
+switch ($data['payment_status']) {
+
+  case "unpaid":
+
+    $actionButton = '
+        <a href="payment.php?id=' . $data['id'] . '"
+        class="w-full sm:w-1/2 order-1 sm:order-2 inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl text-sm font-semibold shadow-md shadow-indigo-100 transition-all transform hover:-translate-y-0.5">
+            Bayar Sekarang
+            <i class="fa-solid fa-chevron-right text-xs ml-2"></i>
+        </a>
+        ';
+
+    break;
+
+  case "pending":
+
+    $actionButton = '
+        <a href="payment.php?id=' . $data['id'] . '"
+        class="w-full sm:w-1/2 order-1 sm:order-2 inline-flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-xl text-sm font-semibold shadow-md">
+            Lihat Pembayaran
+        </a>
+        ';
+
+    break;
+
+  case "paid":
+
+    $actionButton = '
+        <a href="result.php?id=' . $data['id'] . '"
+        class="w-full sm:w-1/2 order-1 sm:order-2 inline-flex items-center justify-center bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl text-sm font-semibold shadow-md">
+            Lihat Hasil
+        </a>
+        ';
+
+    break;
+
+  case "rejected":
+
+    $actionButton = '
+        <a href="payment.php?id=' . $data['id'] . '"
+        class="w-full sm:w-1/2 order-1 sm:order-2 inline-flex items-center justify-center bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl text-sm font-semibold shadow-md">
+            Upload Ulang Bukti
+        </a>
+        ';
+
+    break;
+}
 ?>
 
 <!DOCTYPE html>
@@ -91,7 +289,7 @@ $payment_status = "Belum Dibayar";
         Tes Berhasil Diselesaikan!
       </h1>
       <p class="text-slate-500 text-sm sm:text-base mt-2.5 max-w-md mx-auto leading-relaxed">
-        Luar biasa, <span class="font-semibold text-indigo-600"><?= htmlspecialchars($fullname) ?></span>. Anda telah berhasil merampungkan seluruh rangkaian instruksi ujian.
+        Luar biasa, <span class="font-semibold text-indigo-600"><?= htmlspecialchars($data['fullname']) ?></span>. Anda telah berhasil merampungkan seluruh rangkaian instruksi ujian.
       </p>
     </div>
 
@@ -100,6 +298,33 @@ $payment_status = "Belum Dibayar";
         <div class="flex items-center gap-3.5">
           <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm">
             <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4 flex justify-between">
+
+            <div>
+
+              <p class="text-xs text-gray-500">
+                Jenis Tes
+              </p>
+
+              <h3 class="font-semibold">
+                <?= htmlspecialchars($data['title']) ?>
+              </h3>
+
+            </div>
+
+            <div class="text-right">
+
+              <p class="text-xs text-gray-500">
+                Biaya
+              </p>
+
+              <h3 class="font-bold text-indigo-600">
+                Rp <?= number_format($data['price'], 0, ",", ".") ?>
+              </h3>
+
+            </div>
+
           </div>
           <div>
             <h3 class="font-semibold text-slate-900 text-sm sm:text-base">Status Progress</h3>
@@ -121,9 +346,7 @@ $payment_status = "Belum Dibayar";
             <p class="text-slate-400 text-xs mt-0.5">Akses buka invoice hasil</p>
           </div>
         </div>
-        <span class="inline-flex items-center gap-1.5 bg-rose-50 text-rose-700 px-3 py-1.5 rounded-xl text-xs font-semibold border border-rose-100">
-          <i class="fa-solid fa-circle-xmark text-[10px]"></i> <?= $payment_status ?>
-        </span>
+        <?= $paymentBadge ?>
       </div>
     </div>
 
@@ -131,9 +354,64 @@ $payment_status = "Belum Dibayar";
       <div class="flex gap-3">
         <i class="fa-solid fa-circle-info text-blue-500 text-lg mt-0.5"></i>
         <div>
-          <h3 class="font-semibold text-blue-900 text-sm">Verifikasi Hasil Diperlukan</h3>
+          <h3 class="font-semibold text-blue-900 text-sm">
+
+            <?php
+            switch ($data['payment_status']) {
+
+              case "unpaid":
+                echo "Silakan Lakukan Pembayaran";
+                break;
+
+              case "pending":
+                echo "Pembayaran Sedang Diverifikasi";
+                break;
+
+              case "paid":
+                echo "Pembayaran Berhasil";
+                break;
+
+              case "rejected":
+                echo "Pembayaran Ditolak";
+                break;
+            }
+            ?>
+
+          </h3>
+
           <p class="text-slate-600 text-xs sm:text-sm mt-1.5 leading-relaxed">
-            Untuk menerbitkan lembar hasil evaluasi psikotes, silakan tuntaskan proses administrasi terlebih dahulu. Tombol <b class="text-slate-900">Lihat Hasil</b> akan langsung aktif setelah konfirmasi pembayaran disetujui.
+
+            <?php
+
+            switch ($data['payment_status']) {
+
+              case "unpaid":
+
+                echo "Silakan lakukan pembayaran terlebih dahulu agar hasil psikotes dapat diproses oleh admin.";
+
+                break;
+
+              case "pending":
+
+                echo "Bukti pembayaran telah diterima dan sedang diverifikasi oleh admin.";
+
+                break;
+
+              case "paid":
+
+                echo "Pembayaran telah disetujui. Anda sekarang dapat melihat hasil psikotes.";
+
+                break;
+
+              case "rejected":
+
+                echo "Bukti pembayaran ditolak. Silakan upload ulang bukti pembayaran yang benar.";
+
+                break;
+            }
+
+            ?>
+
           </p>
         </div>
       </div>
@@ -144,10 +422,7 @@ $payment_status = "Belum Dibayar";
         class="w-full sm:w-1/2 order-2 sm:order-1 inline-flex items-center justify-center px-6 py-3 rounded-xl border border-slate-200 text-slate-600 text-sm font-medium hover:bg-slate-50 transition-colors">
         <i class="fa-solid fa-arrow-left text-xs mr-2"></i> Dashboard
       </a>
-      <a href="payment.php"
-        class="w-full sm:w-1/2 order-1 sm:order-2 inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl text-sm font-semibold shadow-md shadow-indigo-100 transition-all transform hover:-translate-y-0.5">
-        Bayar Sekarang <i class="fa-solid fa-chevron-right text-xs ml-2"></i>
-      </a>
+      <?= $actionButton ?>
     </div>
 
   </div>
