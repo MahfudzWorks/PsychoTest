@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
   header("Location: ../../auth/login.php");
   exit;
 }
@@ -14,9 +14,6 @@ include "../../includes/admin_header.php";
 include "../../includes/admin_sidebar.php";
 include "../../includes/admin_navbar.php";
 
-/* =====================================
-   VALIDASI ID
-===================================== */
 if (!isset($_GET['id'])) {
   header("Location: results.php");
   exit;
@@ -24,63 +21,48 @@ if (!isset($_GET['id'])) {
 
 $user_test_id = (int)$_GET['id'];
 
-/* =====================================
-   AMBIL DATA PESERTA & TES
-===================================== */
-$query = mysqli_query($conn, "
-  SELECT
-    user_tests.*,
-    users.fullname,
-    users.email,
-    tests.title,
-    tests.duration,
-    tests.total_questions
-  FROM user_tests
-  JOIN users ON users.id = user_tests.user_id
-  JOIN tests ON tests.id = user_tests.test_id
-  WHERE user_tests.id = '$user_test_id'
-  LIMIT 1
+$stmt = mysqli_prepare($conn, "
+    SELECT user_tests.*, users.fullname, users.email, tests.title, tests.duration, tests.total_questions
+    FROM user_tests
+    JOIN users ON users.id = user_tests.user_id
+    JOIN tests ON tests.id = user_tests.test_id
+    WHERE user_tests.id = ?
+    LIMIT 1
 ");
+mysqli_stmt_bind_param($stmt, "i", $user_test_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 
-if (mysqli_num_rows($query) == 0) {
+if (mysqli_num_rows($result) === 0) {
   echo "<script>alert('Data tidak ditemukan.'); window.location='results.php';</script>";
   exit;
 }
 
-$data = mysqli_fetch_assoc($query);
+$data = mysqli_fetch_assoc($result);
 
-/* =====================================
-   HITUNG LAMA PENGERJAAN
-===================================== */
 $duration = "-";
 if (!empty($data['start_time']) && !empty($data['end_time'])) {
   $start = strtotime($data['start_time']);
   $end = strtotime($data['end_time']);
-  $selisih = $end - $start;
-  $menit = floor($selisih / 60);
-  $detik = $selisih % 60;
-  $duration = $menit . " Menit " . $detik . " Detik";
+  $diff = $end - $start;
+  $minutes = floor($diff / 60);
+  $seconds = $diff % 60;
+  $duration = "{$minutes} Menit {$seconds} Detik";
 }
 
-/* =====================================
-   AMBIL DATA SOAL & JAWABAN
-===================================== */
-$answers = mysqli_query($conn, "
-  SELECT
-    questions.*,
-    user_answers.answer AS user_answer
-  FROM questions
-  LEFT JOIN user_answers 
-    ON user_answers.question_id = questions.id 
-    AND user_answers.user_test_id = '$user_test_id'
-  WHERE questions.test_id = '" . $data['test_id'] . "'
-  ORDER BY questions.id ASC
+$stmt = mysqli_prepare($conn, "
+    SELECT questions.*, user_answers.answer AS user_answer
+    FROM questions
+    LEFT JOIN user_answers ON user_answers.question_id = questions.id AND user_answers.user_test_id = ?
+    WHERE questions.test_id = ?
+    ORDER BY questions.id ASC
 ");
+mysqli_stmt_bind_param($stmt, "ii", $user_test_id, $data['test_id']);
+mysqli_stmt_execute($stmt);
+$answers = mysqli_stmt_get_result($stmt);
 ?>
 
 <div class="ml-64 mt-16 p-8 min-h-screen bg-gray-50">
-
-  <!-- Judul Halaman -->
   <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
     <div>
       <h1 class="text-3xl font-bold text-gray-800">Detail Hasil Tes</h1>
@@ -91,12 +73,10 @@ $answers = mysqli_query($conn, "
     </a>
   </div>
 
-  <!-- Informasi Peserta & Tes -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-    <!-- Informasi Peserta -->
     <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 p-6 border border-gray-100 card-animate">
       <h3 class="text-lg font-bold mb-4 text-blue-600 border-b pb-2">Informasi Peserta</h3>
-      <table class="w-full space-y-2">
+      <table class="w-full">
         <tr>
           <td class="py-2 text-gray-500 w-32">Nama Lengkap</td>
           <td class="font-medium text-gray-800"><?= htmlspecialchars($data['fullname']) ?></td>
@@ -108,18 +88,25 @@ $answers = mysqli_query($conn, "
         <tr>
           <td class="py-2 text-gray-500">Status Tes</td>
           <td>
-            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
-              <?= $data['status'] == 'finished' ? 'Selesai' : 'Berjalan' ?>
+            <?php
+            $statusConfig = [
+              'completed' => ['text' => 'Selesai', 'class' => 'bg-green-100 text-green-700'],
+              'on_progress' => ['text' => 'Berjalan', 'class' => 'bg-yellow-100 text-yellow-700'],
+              'pending' => ['text' => 'Belum Mulai', 'class' => 'bg-gray-100 text-gray-700'],
+            ];
+            $current = $statusConfig[$data['status']] ?? ['text' => htmlspecialchars($data['status']), 'class' => 'bg-red-100 text-red-700'];
+            ?>
+            <span class="<?= $current['class'] ?> px-3 py-1 rounded-full text-sm font-medium">
+              <?= $current['text'] ?>
             </span>
           </td>
         </tr>
       </table>
     </div>
 
-    <!-- Informasi Tes -->
     <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 p-6 border border-gray-100 card-animate">
       <h3 class="text-lg font-bold mb-4 text-purple-600 border-b pb-2">Informasi Tes</h3>
-      <table class="w-full space-y-2">
+      <table class="w-full">
         <tr>
           <td class="py-2 text-gray-500 w-32">Nama Tes</td>
           <td class="font-medium text-gray-800"><?= htmlspecialchars($data['title']) ?></td>
@@ -140,7 +127,6 @@ $answers = mysqli_query($conn, "
     </div>
   </div>
 
-  <!-- Ringkasan Nilai -->
   <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
     <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 p-6 border border-gray-100 card-animate">
       <p class="text-gray-500 text-sm">Nilai Akhir</p>
@@ -156,7 +142,6 @@ $answers = mysqli_query($conn, "
     </div>
   </div>
 
-  <!-- Daftar Jawaban -->
   <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 card-animate">
     <div class="p-4 border-b border-gray-100 bg-gray-50">
       <h3 class="text-lg font-semibold text-gray-800">Rincian Jawaban Peserta</h3>
@@ -222,14 +207,11 @@ $answers = mysqli_query($conn, "
       </tbody>
     </table>
   </div>
-
 </div>
 
-<!-- Efek Animasi -->
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const cards = document.querySelectorAll('.card-animate');
-    cards.forEach((card, index) => {
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.card-animate').forEach((card, index) => {
       card.style.opacity = '0';
       card.style.transform = 'translateY(20px)';
       setTimeout(() => {

@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
   header("Location: ../../auth/login.php");
   exit;
 }
 
-include "../../config/database.php";
+require "../../config/database.php";
 
 $pageTitle = "Hasil Psikotes";
 
@@ -14,100 +14,67 @@ include "../../includes/admin_header.php";
 include "../../includes/admin_sidebar.php";
 include "../../includes/admin_navbar.php";
 
-/* =====================================
-   PENCARIAN & FILTER
-===================================== */
-$search = "";
-$status = "";
-$payment = "";
-$test = "";
+$search = trim($_GET['search'] ?? '');
+$status = $_GET['status'] ?? '';
+$payment = $_GET['payment'] ?? '';
+$test = $_GET['test'] ?? '';
 
-if (isset($_GET['search'])) {
-  $search = mysqli_real_escape_string($conn, $_GET['search']);
-}
-
-if (isset($_GET['status'])) {
-  $status = mysqli_real_escape_string($conn, $_GET['status']);
-}
-
-if (isset($_GET['payment'])) {
-  $payment = mysqli_real_escape_string($conn, $_GET['payment']);
-}
-
-if (isset($_GET['test'])) {
-  $test = mysqli_real_escape_string($conn, $_GET['test']);
-}
-
+$params = [];
+$types = '';
 $where = "WHERE 1=1";
 
 if (!empty($search)) {
-  $where .= " AND (
-        users.fullname LIKE '%$search%'
-        OR users.email LIKE '%$search%'
-    )";
+  $where .= " AND (users.fullname LIKE ? OR users.email LIKE ?)";
+  $searchParam = "%$search%";
+  $params[] = $searchParam;
+  $params[] = $searchParam;
+  $types .= 'ss';
 }
 
 if (!empty($status)) {
-  $where .= " AND user_tests.status='$status'";
+  $where .= " AND user_tests.status = ?";
+  $params[] = $status;
+  $types .= 's';
 }
 
 if (!empty($payment)) {
-  $where .= " AND user_tests.payment_status='$payment'";
+  $where .= " AND user_tests.payment_status = ?";
+  $params[] = $payment;
+  $types .= 's';
 }
 
 if (!empty($test)) {
-  $where .= " AND user_tests.test_id='$test'";
+  $where .= " AND user_tests.test_id = ?";
+  $params[] = $test;
+  $types .= 'i';
 }
 
-/* =====================================
-   AMBIL DATA HASIL TES
-===================================== */
-$query = mysqli_query($conn, "
-  SELECT
-    user_tests.*,
-    users.fullname,
-    users.email,
-    tests.title,
-    tests.price
-  FROM user_tests
-  JOIN users ON users.id = user_tests.user_id
-  JOIN tests ON tests.id = user_tests.test_id
-  $where
-  ORDER BY user_tests.created_at DESC
+$stmt = mysqli_prepare($conn, "
+    SELECT user_tests.*, users.fullname, users.email, tests.title, tests.price
+    FROM user_tests
+    JOIN users ON users.id = user_tests.user_id
+    JOIN tests ON tests.id = user_tests.test_id
+    $where
+    ORDER BY user_tests.created_at DESC
 ");
 
-/* =====================================
-   DAFTAR JENIS TES UNTUK FILTER
-===================================== */
-$listTest = mysqli_query($conn, "
-  SELECT * FROM tests ORDER BY title ASC
-");
+if (!empty($params)) {
+  mysqli_stmt_bind_param($stmt, $types, ...$params);
+}
 
-/* =====================================
-   STATISTIK
-===================================== */
-$totalParticipant = mysqli_fetch_assoc(mysqli_query($conn, "
-  SELECT COUNT(DISTINCT user_id) AS total FROM user_tests
-"))['total'] ?? 0;
+mysqli_stmt_execute($stmt);
+$query = mysqli_stmt_get_result($stmt);
 
-$totalFinished = mysqli_fetch_assoc(mysqli_query($conn, "
-  SELECT COUNT(*) AS total FROM user_tests WHERE status = 'finished'
-"))['total'] ?? 0;
+$listTest = mysqli_query($conn, "SELECT * FROM tests ORDER BY title ASC");
 
-$averageScore = mysqli_fetch_assoc(mysqli_query($conn, "
-  SELECT AVG(score) AS avgscore FROM user_tests WHERE status = 'finished'
-"))['avgscore'] ?? 0;
-
-$highestScore = mysqli_fetch_assoc(mysqli_query($conn, "
-  SELECT MAX(score) AS highest FROM user_tests WHERE status = 'finished'
-"))['highest'] ?? 0;
-
+$totalParticipant = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(DISTINCT user_id) AS total FROM user_tests"))['total'] ?? 0;
+$totalFinished = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM user_tests WHERE status = 'completed'"))['total'] ?? 0;
+$averageScore = mysqli_fetch_assoc(mysqli_query($conn, "SELECT AVG(score) AS avgscore FROM user_tests WHERE status = 'completed'"))['avgscore'] ?? 0;
+$highestScore = mysqli_fetch_assoc(mysqli_query($conn, "SELECT MAX(score) AS highest FROM user_tests WHERE status = 'completed'"))['highest'] ?? 0;
 $averageScore = round($averageScore);
 ?>
 
 <div class="ml-64 mt-16 p-8 min-h-screen bg-gray-50">
-
-  <!-- Judul Halaman -->
   <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
     <div>
       <h1 class="text-3xl font-bold text-gray-800">Hasil Psikotes</h1>
@@ -115,7 +82,6 @@ $averageScore = round($averageScore);
     </div>
   </div>
 
-  <!-- Kartu Statistik -->
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
     <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 p-6 border border-gray-100 card-animate">
       <p class="text-gray-500 text-sm">Total Peserta</p>
@@ -135,7 +101,6 @@ $averageScore = round($averageScore);
     </div>
   </div>
 
-  <!-- Form Pencarian & Filter -->
   <div class="bg-white rounded-xl shadow-md p-5 mb-6 border border-gray-100 card-animate">
     <form method="GET" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
       <input type="text" name="search" value="<?= htmlspecialchars($search) ?>"
@@ -155,16 +120,19 @@ $averageScore = round($averageScore);
       <select name="status"
         class="w-full border border-gray-200 rounded-lg px-4 py-2.5 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 outline-none transition-all duration-200">
         <option value="">Semua Status</option>
-        <option value="started" <?= ($status == "started") ? "selected" : "" ?>>Sedang Berjalan</option>
-        <option value="finished" <?= ($status == "finished") ? "selected" : "" ?>>Selesai</option>
+        <option value="pending" <?= ($status === "pending") ? "selected" : "" ?>>Belum Mulai</option>
+        <option value="on_progress" <?= ($status === "on_progress") ? "selected" : "" ?>>Sedang Berjalan</option>
+        <option value="completed" <?= ($status === "completed") ? "selected" : "" ?>>Selesai</option>
+        <option value="expired" <?= ($status === "expired") ? "selected" : "" ?>>Kadaluarsa</option>
       </select>
 
       <select name="payment"
         class="w-full border border-gray-200 rounded-lg px-4 py-2.5 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 outline-none transition-all duration-200">
         <option value="">Semua Pembayaran</option>
-        <option value="pending" <?= ($payment == "pending") ? "selected" : "" ?>>Menunggu</option>
-        <option value="paid" <?= ($payment == "paid") ? "selected" : "" ?>>Lunas</option>
-        <option value="rejected" <?= ($payment == "rejected") ? "selected" : "" ?>>Ditolak</option>
+        <option value="unpaid" <?= ($payment === "unpaid") ? "selected" : "" ?>>Belum Bayar</option>
+        <option value="pending" <?= ($payment === "pending") ? "selected" : "" ?>>Menunggu</option>
+        <option value="paid" <?= ($payment === "paid") ? "selected" : "" ?>>Lunas</option>
+        <option value="rejected" <?= ($payment === "rejected") ? "selected" : "" ?>>Ditolak</option>
       </select>
 
       <button type="submit"
@@ -174,7 +142,6 @@ $averageScore = round($averageScore);
     </form>
   </div>
 
-  <!-- Tabel Data -->
   <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 card-animate">
     <table class="w-full text-sm">
       <thead class="bg-gray-50 text-gray-700 uppercase text-xs font-semibold">
@@ -194,6 +161,53 @@ $averageScore = round($averageScore);
         <?php if (mysqli_num_rows($query) > 0): ?>
           <?php $no = 1; ?>
           <?php while ($row = mysqli_fetch_assoc($query)): ?>
+            <?php
+            // Status Tes
+            $statusDb = $row['status'] ?? 'pending';
+            switch ($statusDb) {
+              case 'completed':
+                $statusText = 'Selesai';
+                $statusBadge = 'bg-green-100 text-green-700';
+                break;
+              case 'on_progress':
+                $statusText = 'Berjalan';
+                $statusBadge = 'bg-yellow-100 text-yellow-700';
+                break;
+              case 'expired':
+                $statusText = 'Kadaluarsa';
+                $statusBadge = 'bg-red-100 text-red-700';
+                break;
+              default:
+                $statusText = 'Belum Mulai';
+                $statusBadge = 'bg-gray-100 text-gray-700';
+            }
+
+            // Status Pembayaran
+            switch ($row['payment_status'] ?? 'unpaid') {
+              case 'paid':
+                $payText = 'Lunas';
+                $payBadge = 'bg-green-100 text-green-700';
+                break;
+              case 'pending':
+                $payText = 'Menunggu';
+                $payBadge = 'bg-yellow-100 text-yellow-700';
+                break;
+              case 'rejected':
+                $payText = 'Ditolak';
+                $payBadge = 'bg-red-100 text-red-700';
+                break;
+              default:
+                $payText = 'Belum Bayar';
+                $payBadge = 'bg-gray-100 text-gray-700';
+            }
+
+            // Warna Nilai
+            $score = $row['score'] ?? 0;
+            if ($score >= 80) $scoreColor = 'bg-green-100 text-green-700';
+            elseif ($score >= 60) $scoreColor = 'bg-blue-100 text-blue-700';
+            elseif ($score >= 40) $scoreColor = 'bg-yellow-100 text-yellow-700';
+            else $scoreColor = 'bg-red-100 text-red-700';
+            ?>
             <tr class="hover:bg-blue-50/50 transition-colors duration-200">
               <td class="p-4 text-center text-gray-700"><?= $no++ ?></td>
               <td class="p-4">
@@ -205,8 +219,12 @@ $averageScore = round($averageScore);
                 <div class="text-xs text-gray-500">Rp <?= number_format($row['price'], 0, ",", ".") ?></div>
               </td>
               <td class="p-4 text-center text-gray-600">
-                <?= date("d M Y", strtotime($row['start_time'])) ?><br>
-                <span class="text-xs"><?= date("H:i", strtotime($row['start_time'])) ?></span>
+                <?php if (!empty($row['start_time'])): ?>
+                  <?= date("d M Y", strtotime($row['start_time'])) ?><br>
+                  <span class="text-xs"><?= date("H:i", strtotime($row['start_time'])) ?></span>
+                <?php else: ?>
+                  -
+                <?php endif; ?>
               </td>
               <td class="p-4 text-center text-gray-600">
                 <?php if (!empty($row['end_time'])): ?>
@@ -217,43 +235,13 @@ $averageScore = round($averageScore);
                 <?php endif; ?>
               </td>
               <td class="p-4 text-center">
-                <?php
-                $scoreColor = "bg-red-100 text-red-700";
-                if ($row['score'] >= 80) {
-                  $scoreColor = "bg-green-100 text-green-700";
-                } elseif ($row['score'] >= 60) {
-                  $scoreColor = "bg-blue-100 text-blue-700";
-                } elseif ($row['score'] >= 40) {
-                  $scoreColor = "bg-yellow-100 text-yellow-700";
-                }
-                ?>
-                <span class="<?= $scoreColor ?> px-2.5 py-1 rounded-full text-xs font-medium"><?= $row['score'] ?></span>
+                <span class="<?= $scoreColor ?> px-2.5 py-1 rounded-full text-xs font-medium"><?= $score ?></span>
               </td>
               <td class="p-4 text-center">
-                <?php if ($row['status'] == "finished"): ?>
-                  <span class="bg-green-100 text-green-700 px-2.5 py-1 rounded-full text-xs font-medium">Selesai</span>
-                <?php else: ?>
-                  <span class="bg-blue-100 text-blue-700 px-2.5 py-1 rounded-full text-xs font-medium">Berjalan</span>
-                <?php endif; ?>
+                <span class="<?= $statusBadge ?> px-2.5 py-1 rounded-full text-xs font-medium"><?= $statusText ?></span>
               </td>
               <td class="p-4 text-center">
-                <?php
-                switch ($row['payment_status']) {
-                  case "paid":
-                    $pay = 'bg-green-100 text-green-700';
-                    $payText = 'Lunas';
-                    break;
-                  case "pending":
-                    $pay = 'bg-yellow-100 text-yellow-700';
-                    $payText = 'Menunggu';
-                    break;
-                  default:
-                    $pay = 'bg-red-100 text-red-700';
-                    $payText = 'Ditolak';
-                    break;
-                }
-                ?>
-                <span class="<?= $pay ?> px-2.5 py-1 rounded-full text-xs font-medium"><?= $payText ?></span>
+                <span class="<?= $payBadge ?> px-2.5 py-1 rounded-full text-xs font-medium"><?= $payText ?></span>
               </td>
               <td class="p-4 text-center">
                 <a href="result_detail.php?id=<?= $row['id'] ?>"
@@ -275,14 +263,11 @@ $averageScore = round($averageScore);
       </tbody>
     </table>
   </div>
-
 </div>
 
-<!-- Efek Animasi -->
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const cards = document.querySelectorAll('.card-animate');
-    cards.forEach((card, index) => {
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.card-animate').forEach((card, index) => {
       card.style.opacity = '0';
       card.style.transform = 'translateY(20px)';
       setTimeout(() => {

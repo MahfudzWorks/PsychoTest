@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
   header("Location: ../../auth/login.php");
   exit;
 }
 
-include "../../config/database.php";
+require "../../config/database.php";
 
 $pageTitle = "Verifikasi Pembayaran";
 
@@ -14,89 +14,59 @@ include "../../includes/admin_header.php";
 include "../../includes/admin_sidebar.php";
 include "../../includes/admin_navbar.php";
 
-/* =====================================
-   PENCARIAN & FILTER
-===================================== */
-$search = "";
-$status = "";
-$test = "";
+$search = trim($_GET['search'] ?? '');
+$status = $_GET['status'] ?? '';
+$test = $_GET['test'] ?? '';
 
-if (isset($_GET['search'])) {
-  $search = mysqli_real_escape_string($conn, $_GET['search']);
-}
-
-if (isset($_GET['status'])) {
-  $status = mysqli_real_escape_string($conn, $_GET['status']);
-}
-
-if (isset($_GET['test'])) {
-  $test = mysqli_real_escape_string($conn, $_GET['test']);
-}
-
+$params = [];
+$types = '';
 $where = "WHERE 1=1";
 
 if (!empty($search)) {
-  $where .= " AND (
-        users.fullname LIKE '%$search%'
-        OR users.email LIKE '%$search%'
-    )";
+  $where .= " AND (users.fullname LIKE ? OR users.email LIKE ?)";
+  $searchParam = "%$search%";
+  $params[] = $searchParam;
+  $params[] = $searchParam;
+  $types .= 'ss';
 }
 
 if (!empty($status)) {
-  $where .= " AND user_tests.payment_status = '$status'";
+  $where .= " AND user_tests.payment_status = ?";
+  $params[] = $status;
+  $types .= 's';
 }
 
 if (!empty($test)) {
-  $where .= " AND user_tests.test_id = '$test'";
+  $where .= " AND user_tests.test_id = ?";
+  $params[] = $test;
+  $types .= 'i';
 }
 
-/* =====================================
-   DATA PEMBAYARAN
-===================================== */
-$query = mysqli_query($conn, "
-  SELECT
-    user_tests.*,
-    users.fullname,
-    users.email,
-    tests.title,
-    tests.price
-  FROM user_tests
-  JOIN users ON users.id = user_tests.user_id
-  JOIN tests ON tests.id = user_tests.test_id
-  $where
-  ORDER BY user_tests.created_at DESC
+$stmt = mysqli_prepare($conn, "
+    SELECT user_tests.*, users.fullname, users.email, tests.title, tests.price
+    FROM user_tests
+    JOIN users ON users.id = user_tests.user_id
+    JOIN tests ON tests.id = user_tests.test_id
+    $where
+    ORDER BY user_tests.created_at DESC
 ");
 
-/* =====================================
-   DAFTAR JENIS TES UNTUK FILTER
-===================================== */
-$listTest = mysqli_query($conn, "
-  SELECT * FROM tests ORDER BY title ASC
-");
+if (!empty($params)) {
+  mysqli_stmt_bind_param($stmt, $types, ...$params);
+}
 
-/* =====================================
-   STATISTIK
-===================================== */
-$totalUnpaid = mysqli_fetch_assoc(mysqli_query($conn, "
-  SELECT COUNT(*) AS total FROM user_tests WHERE payment_status = 'unpaid'
-"))['total'] ?? 0;
+mysqli_stmt_execute($stmt);
+$query = mysqli_stmt_get_result($stmt);
 
-$totalPending = mysqli_fetch_assoc(mysqli_query($conn, "
-  SELECT COUNT(*) AS total FROM user_tests WHERE payment_status = 'pending'
-"))['total'] ?? 0;
+$listTest = mysqli_query($conn, "SELECT * FROM tests ORDER BY title ASC");
 
-$totalPaid = mysqli_fetch_assoc(mysqli_query($conn, "
-  SELECT COUNT(*) AS total FROM user_tests WHERE payment_status = 'paid'
-"))['total'] ?? 0;
-
-$totalRejected = mysqli_fetch_assoc(mysqli_query($conn, "
-  SELECT COUNT(*) AS total FROM user_tests WHERE payment_status = 'rejected'
-"))['total'] ?? 0;
+$totalUnpaid = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM user_tests WHERE payment_status = 'unpaid'"))['total'] ?? 0;
+$totalPending = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM user_tests WHERE payment_status = 'pending'"))['total'] ?? 0;
+$totalPaid = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM user_tests WHERE payment_status = 'paid'"))['total'] ?? 0;
+$totalRejected = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM user_tests WHERE payment_status = 'rejected'"))['total'] ?? 0;
 ?>
 
 <div class="ml-64 mt-16 p-8 min-h-screen bg-gray-50">
-
-  <!-- Judul Halaman -->
   <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
     <div>
       <h1 class="text-3xl font-bold text-gray-800">Verifikasi Pembayaran</h1>
@@ -104,7 +74,6 @@ $totalRejected = mysqli_fetch_assoc(mysqli_query($conn, "
     </div>
   </div>
 
-  <!-- Kartu Statistik -->
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
     <div class="bg-white rounded-xl shadow-md p-6 border border-gray-100">
       <p class="text-gray-500 text-sm">Belum Bayar</p>
@@ -124,7 +93,6 @@ $totalRejected = mysqli_fetch_assoc(mysqli_query($conn, "
     </div>
   </div>
 
-  <!-- Form Pencarian & Filter -->
   <div class="bg-white rounded-xl shadow-md p-5 mb-6 border border-gray-100 card-animate">
     <form method="GET" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
       <input type="text" name="search" value="<?= htmlspecialchars($search) ?>"
@@ -144,10 +112,10 @@ $totalRejected = mysqli_fetch_assoc(mysqli_query($conn, "
       <select name="status"
         class="w-full border border-gray-200 rounded-lg px-4 py-2.5 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 outline-none transition-all duration-200">
         <option value="">Semua Status</option>
-        <option value="unpaid" <?= ($status == "unpaid") ? "selected" : "" ?>>Belum Bayar</option>
-        <option value="pending" <?= ($status == "pending") ? "selected" : "" ?>>Menunggu</option>
-        <option value="paid" <?= ($status == "paid") ? "selected" : "" ?>>Lunas</option>
-        <option value="rejected" <?= ($status == "rejected") ? "selected" : "" ?>>Ditolak</option>
+        <option value="unpaid" <?= ($status === "unpaid") ? "selected" : "" ?>>Belum Bayar</option>
+        <option value="pending" <?= ($status === "pending") ? "selected" : "" ?>>Menunggu</option>
+        <option value="paid" <?= ($status === "paid") ? "selected" : "" ?>>Lunas</option>
+        <option value="rejected" <?= ($status === "rejected") ? "selected" : "" ?>>Ditolak</option>
       </select>
 
       <button type="submit"
@@ -157,7 +125,6 @@ $totalRejected = mysqli_fetch_assoc(mysqli_query($conn, "
     </form>
   </div>
 
-  <!-- Tabel Data Pembayaran -->
   <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 card-animate">
     <table class="w-full text-sm">
       <thead class="bg-gray-50 text-gray-700 uppercase text-xs font-semibold">
@@ -177,28 +144,13 @@ $totalRejected = mysqli_fetch_assoc(mysqli_query($conn, "
           <?php $no = 1; ?>
           <?php while ($row = mysqli_fetch_assoc($query)): ?>
             <?php
-            switch ($row['payment_status']) {
-              case "unpaid":
-                $badge = "bg-gray-100 text-gray-700";
-                $statusText = "Belum Bayar";
-                break;
-              case "pending":
-                $badge = "bg-yellow-100 text-yellow-700";
-                $statusText = "Menunggu";
-                break;
-              case "paid":
-                $badge = "bg-green-100 text-green-700";
-                $statusText = "Lunas";
-                break;
-              case "rejected":
-                $badge = "bg-red-100 text-red-700";
-                $statusText = "Ditolak";
-                break;
-              default:
-                $badge = "bg-red-100 text-red-700";
-                $statusText = "Ditolak";
-                break;
-            }
+            $statusConfig = [
+              'unpaid' => ['text' => 'Belum Bayar', 'class' => 'bg-gray-100 text-gray-700'],
+              'pending' => ['text' => 'Menunggu', 'class' => 'bg-yellow-100 text-yellow-700'],
+              'paid' => ['text' => 'Lunas', 'class' => 'bg-green-100 text-green-700'],
+              'rejected' => ['text' => 'Ditolak', 'class' => 'bg-red-100 text-red-700'],
+            ];
+            $current = $statusConfig[$row['payment_status']] ?? ['text' => 'Tidak Diketahui', 'class' => 'bg-red-100 text-red-700'];
             ?>
             <tr class="hover:bg-blue-50/50 transition-colors duration-200">
               <td class="p-4 text-center text-gray-700"><?= $no++ ?></td>
@@ -231,11 +183,11 @@ $totalRejected = mysqli_fetch_assoc(mysqli_query($conn, "
                 <?php endif; ?>
               </td>
               <td class="p-4 text-center">
-                <span class="<?= $badge ?> px-2.5 py-1 rounded-full text-xs font-medium"><?= $statusText ?></span>
+                <span class="<?= $current['class'] ?> px-2.5 py-1 rounded-full text-xs font-medium"><?= $current['text'] ?></span>
               </td>
               <td class="p-4 text-center">
                 <div class="flex justify-center gap-2">
-                  <?php if ($row['payment_status'] == "pending" && !empty($row['payment_proof'])): ?>
+                  <?php if ($row['payment_status'] === "pending" && !empty($row['payment_proof'])): ?>
                     <a href="payment_approve.php?id=<?= $row['id'] ?>" onclick="return confirm('Setujui pembayaran ini?')"
                       class="bg-green-600 hover:bg-green-700 text-white w-7 h-7 rounded-lg inline-flex items-center justify-center transition-all hover:scale-105"
                       title="Setujui">
@@ -264,14 +216,11 @@ $totalRejected = mysqli_fetch_assoc(mysqli_query($conn, "
       </tbody>
     </table>
   </div>
-
 </div>
 
-<!-- Efek Animasi -->
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const cards = document.querySelectorAll('.card-animate');
-    cards.forEach((card, index) => {
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.card-animate').forEach((card, index) => {
       card.style.opacity = '0';
       card.style.transform = 'translateY(20px)';
       setTimeout(() => {
