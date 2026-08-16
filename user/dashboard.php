@@ -35,7 +35,6 @@ if (!$result) {
   die("Kesalahan pada database: " . mysqli_error($conn));
 }
 
-// Menghitung statistik ringkas untuk komponen dashboard atas
 $total_tests = 0;
 $on_progress_count = 0;
 $completed_count = 0;
@@ -71,7 +70,6 @@ while ($row = mysqli_fetch_assoc($result)) {
       overflow: hidden;
     }
 
-    /* Animasi Tambahan */
     .fade-in-up {
       opacity: 0;
       transform: translateY(20px);
@@ -89,7 +87,6 @@ while ($row = mysqli_fetch_assoc($result)) {
 
   <?php include "../includes/navbar_user.php"; ?>
 
-  <!-- Container Utama dengan padding vertikal yang lebih lega -->
   <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
     <!-- HERO BANNER -->
@@ -156,7 +153,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
       <?php if ($total_tests > 0): ?>
         <?php foreach ($tests_data as $test):
-          // Set atribut status untuk Javascript Filter
+
           $status_class = 'all';
           if (($test['test_status'] ?? '') === 'on_progress') {
             $status_class = 'on_progress';
@@ -204,7 +201,6 @@ while ($row = mysqli_fetch_assoc($result)) {
               <h3 class="text-lg font-bold text-slate-900 group-hover:text-indigo-600 transition-colors mb-2"><?= htmlspecialchars($test['title']) ?></h3>
               <p class="text-slate-500 text-sm mb-6 line-clamp-2 leading-relaxed"><?= htmlspecialchars($test['description']) ?></p>
 
-              <!-- Grid Detail Informasi Modul -->
               <div class="grid grid-cols-3 gap-2.5 mb-6">
                 <div class="bg-slate-50 border border-slate-100 rounded-xl p-2.5 text-center">
                   <i class="fa-solid fa-stopwatch text-indigo-500 text-sm mb-1"></i>

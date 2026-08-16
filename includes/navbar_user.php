@@ -1,30 +1,26 @@
 <?php
-// Pastikan sesi sudah aktif
+
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 
-// Koneksi database (sama seperti yang dipakai di halaman lain)
 include __DIR__ . "/../config/database.php";
 
-// Ambil data dasar dari sesi
 $fullname = isset($_SESSION['fullname']) ? $_SESSION['fullname'] : 'User';
 $role = isset($_SESSION['role']) ? $_SESSION['role'] : 'user';
 $user_id = isset($_SESSION['id']) ? (int)$_SESSION['id'] : 0;
 
-// Ambil foto profil dari database
 $profile_pic = "";
 if ($user_id > 0) {
   $query = mysqli_query($conn, "SELECT profile_pic FROM users WHERE id = '$user_id' LIMIT 1");
   $data = mysqli_fetch_assoc($query);
   if (!empty($data['profile_pic'])) {
-    // Jalur foto: ada di folder /user/profiles/
+
     $profile_pic = "/user/profiles/" . $data['profile_pic'];
   }
 }
 
-// Tentukan link dasbor
-$dashboardLink = ($role === 'admin') ? '/admin/dashboard.php' : '/user/dashboard.php';
+$dashboardLink = ($role === 'admin') ? '/PsychoTest/user/dashboard.php' : '/user/dashboard.php';
 ?>
 
 <nav class="bg-white/90 backdrop-blur-md border-b border-slate-100 sticky top-0 z-50">
@@ -53,7 +49,6 @@ $dashboardLink = ($role === 'admin') ? '/admin/dashboard.php' : '/user/dashboard
         <div class="relative">
           <button id="user-menu-btn" class="flex items-center gap-3 px-3 py-2 rounded-xl border border-slate-100 bg-slate-50/50 hover:bg-slate-50 transition-all focus:outline-none group">
 
-            <!-- ✅ Tampilkan Foto Profil jika ada, jika tidak pakai huruf awal -->
             <?php if (!empty($profile_pic)): ?>
               <div class="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow-sm shadow-indigo-200 overflow-hidden">
                 <img src="<?= htmlspecialchars($profile_pic) ?>" alt="Foto Profil" class="w-full h-full object-cover">
@@ -101,7 +96,7 @@ $dashboardLink = ($role === 'admin') ? '/admin/dashboard.php' : '/user/dashboard
   <div id="app-mobile-menu" class="hidden md:hidden border-t border-slate-100 bg-white shadow-lg absolute w-full left-0">
     <div class="px-4 py-4 space-y-2">
       <div class="px-4 py-3 bg-slate-50 rounded-xl mb-2 flex items-center gap-3">
-        <!-- ✅ Foto profil juga ditampilkan di menu HP -->
+
         <?php if (!empty($profile_pic)): ?>
           <div class="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center overflow-hidden">
             <img src="<?= htmlspecialchars($profile_pic) ?>" alt="Foto Profil" class="w-full h-full object-cover">
@@ -117,9 +112,9 @@ $dashboardLink = ($role === 'admin') ? '/admin/dashboard.php' : '/user/dashboard
         </div>
       </div>
       <a href="<?= $dashboardLink ?>" class="block px-4 py-2.5 rounded-xl text-base font-medium text-slate-700 hover:bg-slate-50">Dasbor Utama</a>
-      <a href="/user/profile.php" class="block px-4 py-2.5 rounded-xl text-base font-medium text-slate-700 hover:bg-slate-50">Profil Saya</a>
-      <a href="/user/riwayat.php" class="block px-4 py-2.5 rounded-xl text-base font-medium text-slate-700 hover:bg-slate-50">Riwayat Tes</a>
-      <a href="/index.php" class="block px-4 py-2.5 rounded-xl text-base font-medium text-slate-500 hover:bg-slate-50">Kembali ke Landing Page</a>
+      <a href="/PsychoTest/user/profile.php" class="block px-4 py-2.5 rounded-xl text-base font-medium text-slate-700 hover:bg-slate-50">Profil Saya</a>
+      <a href="/PsychoTest/user/riwayat.php" class="block px-4 py-2.5 rounded-xl text-base font-medium text-slate-700 hover:bg-slate-50">Riwayat Tes</a>
+      <a href="/PsychoTest/index.php" class="block px-4 py-2.5 rounded-xl text-base font-medium text-slate-500 hover:bg-slate-50">Kembali ke Landing Page</a>
       <div class="border-t border-slate-100 pt-2">
         <a href="/auth/logout.php" class="w-full text-center inline-flex items-center justify-center bg-rose-50 hover:bg-rose-100 text-rose-600 py-3 rounded-xl text-base font-semibold">
           <i class="fa-solid fa-right-from-bracket mr-2"></i> Keluar
