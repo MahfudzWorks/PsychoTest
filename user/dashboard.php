@@ -4,7 +4,7 @@ require "../config/database.php";
 
 // Cek sesi login
 if (!isset($_SESSION['login']) || empty($_SESSION['id'])) {
-  header("Location: ../auth/login.php");
+  header("Location: /PsychoTest/auth/login.php");
   exit;
 }
 
@@ -275,16 +275,13 @@ while ($row = mysqli_fetch_assoc($result)) {
   <script>
     document.addEventListener("DOMContentLoaded", () => {
 
-      // 1. Animasi Page Load Fade-in up
       const fadeElements = document.querySelectorAll('.fade-in-up');
       fadeElements.forEach((el) => {
-        // Trigger class setelah render awal
         setTimeout(() => {
           el.classList.add('visible');
         }, 50);
       });
 
-      // 2. Animasi Counter Angka Statistik
       const counters = document.querySelectorAll('.count-up');
       counters.forEach(counter => {
         const target = +counter.getAttribute('data-target');
@@ -294,7 +291,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         }
 
         let count = 0;
-        const speed = 40; // Semakin kecil semakin cepat
+        const speed = 40;
         const increment = Math.ceil(target / speed);
 
         const updateCount = () => {
@@ -309,13 +306,12 @@ while ($row = mysqli_fetch_assoc($result)) {
         updateCount();
       });
 
-      // 3. Filter Tab Kartu Ujian Dinamis
       const filterButtons = document.querySelectorAll('.filter-btn');
       const testCards = document.querySelectorAll('.test-card');
 
       filterButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-          // Atur styling tombol aktif
+
           filterButtons.forEach(b => {
             b.classList.remove('bg-white', 'text-slate-800', 'shadow-xs', 'font-semibold');
             b.classList.add('text-slate-500', 'font-medium');
@@ -323,7 +319,6 @@ while ($row = mysqli_fetch_assoc($result)) {
           btn.classList.add('bg-white', 'text-slate-800', 'shadow-xs', 'font-semibold');
           btn.classList.remove('text-slate-500', 'font-medium');
 
-          // Logika Sembunyikan / Tampilkan dengan efek transisi mikro
           const filterValue = btn.getAttribute('data-filter');
 
           testCards.forEach(card => {

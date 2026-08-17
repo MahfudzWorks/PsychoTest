@@ -45,7 +45,7 @@ if (mysqli_num_rows($res_check) > 0) {
     header("Location: test.php?user_test_id=" . $userTest['id']);
     exit;
   }
-  // Jika sudah selesai, alihkan ke halaman selesai/invoice
+
   if ($userTest['status'] === 'completed') {
     header("Location: finish.php?id=" . $userTest['id']);
     exit;

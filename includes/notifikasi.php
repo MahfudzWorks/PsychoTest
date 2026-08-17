@@ -21,9 +21,9 @@ $query_notif = mysqli_query($conn, "
   ORDER BY created_at DESC
 ");
 
-include "../includes/admin_header.php";
-include "../includes/admin_sidebar.php";
-include "../includes/admin_navbar.php";
+include "/PsychoTest/includes/admin_header.php";
+include "/PsychoTest/includes/admin_sidebar.php";
+include "/PsychoTest/includes/admin_navbar.php";
 ?>
 
 <div class="ml-64 mt-16 p-8 min-h-screen bg-gray-50">
